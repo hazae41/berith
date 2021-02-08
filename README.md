@@ -6,24 +6,42 @@ WebAssembly powered Ed25519 for Deno, written in Rust.
 
     deno cache -r https://raw.githubusercontent.com/hazae41/deno-ed25519/master/mod.ts
 
+### Basic usage
+
 ```typescript
-import { Ed25519Keypair } from "https://raw.githubusercontent.com/hazae41/deno-ed25519/master/mod.ts"
+import { 
+    Ed25519Keypair,
+    Ed25519PublicKey,
+    Ed25519Signature
+} from "https://raw.githubusercontent.com/hazae41/deno-ed25519/master/mod.ts"
 
+// -- Generating an identity --
 const keypair = new Ed25519Keypair()
-console.log("keypair", keypair.to_bytes())
+const identity = keypair.public() // Ed25519PublicKey
 
-const identity = keypair.public()
-console.log("identity", identity.to_bytes())
-
+// -- Signing & Verifying --
 const bytes = new TextEncoder()
-  .encode("hello world")
-console.log("bytes", bytes)
+  .encode("hello world") // Uint8Array
 
-const proof = keypair.sign(bytes)
-console.log("proof", proof.to_bytes())
+const proof = keypair.sign(bytes) // Ed25519Signature
+const verified = identity.verify(bytes, proof) // boolean
+```
 
-const verified = identity.verify(bytes, proof)
-console.log("verified", verified)
+### Serializing to Uint8Array
+
+```typescript
+const bytes = new Ed25519Keypair().to_bytes()
+const keypair = Ed25519Keypair.from_bytes(bytes)
+```
+
+```typescript
+const bytes = keypair.public().to_bytes()
+const identity = Ed25519PublicKey.from_bytes(bytes)
+```
+
+```typescript
+const bytes = keypair.sign(input).to_bytes()
+const proof = Ed25519Signature.from_bytes(bytes)
 ```
 
 ## Test 
