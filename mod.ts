@@ -1,3 +1,5 @@
+/// <reference path="./pkg/denoed25519.d.ts" />
+
 export {
   Ed25519Keypair,
   Ed25519PublicKey,
