@@ -4,7 +4,7 @@ WebAssembly powered Ed25519 for Deno, written in Rust.
 
 ## Usage
 
-    deno cache -r https://raw.githubusercontent.com/hazae41/deno-ed25519/master/mod.ts
+    deno cache -r https://deno.land/x/ed25519_dalek/mod.ts
 
 ### Basic usage
 
@@ -13,7 +13,7 @@ import {
     Ed25519Keypair,
     Ed25519PublicKey,
     Ed25519Signature
-} from "https://raw.githubusercontent.com/hazae41/deno-ed25519/master/mod.ts"
+} from "https://deno.land/x/ed25519_dalek/mod.ts"
 
 // -- Generating an identity --
 const keypair = new Ed25519Keypair()
@@ -46,8 +46,8 @@ const proof = Ed25519Signature.from_bytes(bytes)
 
 ## Test 
 
-    deno cache -r https://raw.githubusercontent.com/hazae41/deno-ed25519/master/test.ts
-    deno run --allow-net https://raw.githubusercontent.com/hazae41/deno-ed25519/master/test.ts
+    deno cache -r https://deno.land/x/ed25519_dalek/test.ts
+    deno run --allow-net https://deno.land/x/ed25519_dalek/test.ts
 
 ## Building
 
