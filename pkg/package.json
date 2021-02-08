@@ -1,0 +1,15 @@
+{
+  "name": "denoed25519",
+  "collaborators": [
+    "hazae41 <hazae41@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "denoed25519_bg.wasm",
+    "denoed25519.js",
+    "denoed25519.d.ts"
+  ],
+  "module": "denoed25519.js",
+  "types": "denoed25519.d.ts",
+  "sideEffects": false
+}
