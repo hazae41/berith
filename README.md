@@ -44,6 +44,24 @@ const bytes = keypair.sign(input).to_bytes()
 const proof = Ed25519Signature.from_bytes(bytes)
 ```
 
+## Top-level await
+
+If you intent to use it in a browser context, where top-level await is not available, you can use `legacy.ts`
+
+```typescript
+import Ed25519, {
+  Ed25519Keypair,
+  Ed25519PublicKey,
+  Ed25519Signature
+} from "https://deno.land/x/ed25519_dalek/legacy.ts"
+
+async function test(){
+    await Ed25519 // Wait for init
+
+    const keypair = new Ed25519Keypair()
+}
+```
+
 ## Test 
 
     deno cache -r https://deno.land/x/ed25519_dalek/test.ts

@@ -19,6 +19,6 @@ async function read(path: string) {
   return await res.arrayBuffer();
 }
 
-export const ready = (async () => {
+export default (async () => {
   await init(read("./pkg/denoed25519_bg.wasm"));
 })()
