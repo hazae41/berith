@@ -1,6 +1,8 @@
-import {
+import Ed25519, {
   Ed25519Keypair
 } from "./mod.ts";
+
+await Ed25519()
 
 const keypair = new Ed25519Keypair()
 console.log("keypair", keypair.to_bytes())

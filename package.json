@@ -1,0 +1,22 @@
+{
+  "name": "ed25519_dalek",
+  "version": "1.1",
+  "author": "hazae41",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release",
+    "build:package": "deno run -A build.ts && rimraf dist && bunchee -m ./src/index.ts && ttsc && rimraf dist/libs",
+    "build": "npm run build:wasm && npm run build:package"
+  },
+  "devDependencies": {
+    "bunchee": "^2.1.4",
+    "rimraf": "^3.0.2",
+    "ttypescript": "^1.5.13",
+    "typescript": "4.8.3",
+    "typescript-transform-paths": "^3.3.1"
+  }
+}
