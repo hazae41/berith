@@ -10,5 +10,5 @@ import { wasm } from "../wasm/pkg/ed25519_dalek_wasm.wasm.js";
 let module: Promise<unknown> | undefined = undefined
 
 export default async function () {
-  await (module ??= init(wasm))
+  await (module ??= init(Buffer.from(wasm, "base64")))
 }

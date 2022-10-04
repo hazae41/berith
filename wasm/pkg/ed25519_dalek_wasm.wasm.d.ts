@@ -1,1 +1,1 @@
-export const wasm: Uint8Array; 
+export const wasm: string;

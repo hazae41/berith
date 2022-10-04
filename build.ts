@@ -1,3 +1,5 @@
+import * as Base64 from "https://deno.land/std@0.158.0/encoding/base64.ts";
+
 const wasm = await Deno.readFile("./wasm/pkg/ed25519_dalek_wasm_bg.wasm");
 
 async function replaceAllFile(path: string, search: string, replace: string) {
@@ -7,12 +9,12 @@ async function replaceAllFile(path: string, search: string, replace: string) {
 
 await Deno.writeTextFile(
   `./wasm/pkg/ed25519_dalek_wasm.wasm.js`,
-  `export const wasm = new Uint8Array([${wasm.join(",")}]);`
+  `export const wasm = "${Base64.encode(wasm)}";`
 );
 
 await Deno.writeTextFile(
   `./wasm/pkg/ed25519_dalek_wasm.wasm.d.ts`,
-  `export const wasm: Uint8Array; `
+  `export const wasm: string;`
 );
 
 await replaceAllFile(
