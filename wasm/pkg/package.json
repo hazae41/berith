@@ -1,0 +1,15 @@
+{
+  "name": "ed25519_dalek_wasm",
+  "collaborators": [
+    "hazae41 <hazae41@proton.me>"
+  ],
+  "version": "1.0.0",
+  "files": [
+    "ed25519_dalek_wasm_bg.wasm",
+    "ed25519_dalek_wasm.js",
+    "ed25519_dalek_wasm.d.ts"
+  ],
+  "module": "ed25519_dalek_wasm.js",
+  "types": "ed25519_dalek_wasm.d.ts",
+  "sideEffects": false
+}
