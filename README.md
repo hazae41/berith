@@ -7,7 +7,7 @@ WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures.
 6.99x times faster than `@noble/ed25519`
 
 ```bash
-cd bench/deno && npm run bench
+git clone https://github.com/hazae41/ed25519-dalek-wasm && cd ed25519-dalek-wasm/bench/deno && npm run bench
 ```
 
 ```
