@@ -2,13 +2,13 @@
 
 WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures.
 
-## Install (Node)
+### Install (Node)
 
 ```bash
 npm i ed25519_dalek
 ```
 
-## Test (Deno)
+### Test (Deno)
 
 ```bash
 deno run --allow-net https://deno.land/x/ed25519_dalek/test.ts
