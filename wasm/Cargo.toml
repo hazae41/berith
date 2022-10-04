@@ -11,5 +11,4 @@ crate-type = ["cdylib"]
 wasm-bindgen = { version = "0.2.83", default-features = false }
 wee_alloc = { version = "0.4.5", default-features = false, features = ["size_classes"] }
 ed25519-dalek = { version = "1.0.1", default-features = false, features = ["rand", "u64_backend"] }
-rand = { version = "0.7.3", default-features = false, features = ["getrandom"] }
-getrandom = { version = "0.2.7", default-features = false, features = ["js"] }
+rand = { version = "0.7.3", default-features = false, features = ["wasm-bindgen", "getrandom"] }
