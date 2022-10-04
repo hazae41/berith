@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./node",
     "outDir": "dist",
     "target": "ES5",
     "strict": true,
@@ -27,7 +27,7 @@
     ]
   },
   "include": [
-    "./src/index.ts"
+    "./node/index.ts"
   ],
   "exclude": [
     "node_modules"

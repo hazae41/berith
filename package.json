@@ -12,7 +12,7 @@
   "scripts": {
     "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release",
     "build:opt": "wasm-opt ./wasm/pkg/ed25519_dalek_wasm_bg.wasm -Oz -o ./wasm/pkg/ed25519_dalek_wasm_bg.wasm",
-    "build:package": "rimraf dist && deno run -A build.ts && bunchee -m ./src/index.ts && ttsc",
+    "build:package": "rimraf dist && deno run -A build.ts && bunchee -m ./node/index.ts && ttsc",
     "build": "npm run build:wasm && npm run build:opt && npm run build:package"
   },
   "devDependencies": {
