@@ -11,27 +11,32 @@ npm i ed25519_dalek
 ### Test (Deno)
 
 ```bash
-deno run --allow-net https://deno.land/x/ed25519_dalek/test.ts
+deno run --allow-net https://deno.land/x/ed25519_dalek/deno/test.ts
 ```
 
-### Basic usage
+### Basic usage (Deno)
 
 ```typescript
 import Ed25519, {
   Ed25519Keypair,
   Ed25519PublicKey,
   Ed25519Signature,
-} from "https://deno.land/x/ed25519_dalek/mod.ts";
+} from "https://deno.land/x/ed25519_dalek/deno/mod.ts";
 
-await Ed25519;
+// import Ed25519, {
+//   Ed25519Keypair,
+//   Ed25519PublicKey,
+//   Ed25519Signature,
+// } from "ed25519_dalek";
+
+await Ed25519();
 
 // -- Generating an identity --
 const keypair = new Ed25519Keypair();
 const identity = keypair.public(); // Ed25519PublicKey
 
 // -- Signing & Verifying --
-const bytes = new TextEncoder()
-  .encode("hello world"); // Uint8Array
+const bytes = new TextEncoder().encode("hello world"); // Uint8Array
 
 const proof = keypair.sign(bytes); // Ed25519Signature
 const verified = identity.verify(bytes, proof); // boolean
