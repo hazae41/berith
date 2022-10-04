@@ -10,7 +10,5 @@ crate-type = ["cdylib"]
 [dependencies]
 wasm-bindgen = "0.2.83"
 wee_alloc = "0.4.5"
-js-sys = "0.3"
-ed25519 = "1.5.2"
 ed25519-dalek = "1.0.1"
 rand = { version = "0.7.3", features = ["wasm-bindgen"] }

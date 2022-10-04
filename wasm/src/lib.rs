@@ -1,16 +1,20 @@
+#![no_std]
+
+extern crate alloc;
+
+use alloc::{boxed::Box, vec::Vec};
+
 use wasm_bindgen::prelude::*;
 
 use ed25519_dalek::{Keypair, PublicKey, Signature, Signer, Verifier};
 
-use core::convert::TryFrom;
 use rand::rngs::OsRng;
-use std::fmt::Display;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-fn js_value<T: Display>(e: T) -> JsValue {
-    return JsValue::from(&format!("{}", e));
+fn error<T>(_: T) -> JsValue {
+    return JsValue::from("Error");
 }
 
 #[wasm_bindgen]
@@ -30,7 +34,7 @@ impl Ed25519Keypair {
     #[wasm_bindgen]
     pub fn from_bytes(input: &[u8]) -> Result<Ed25519Keypair, JsValue> {
         let result = Keypair::from_bytes(input);
-        let keypair = result.map_err(js_value)?;
+        let keypair = result.map_err(error)?;
         let inner = Box::new(keypair);
         Ok(Self { inner })
     }
@@ -70,7 +74,7 @@ impl Ed25519Signature {
     #[wasm_bindgen]
     pub fn from_bytes(input: &[u8]) -> Result<Ed25519Signature, JsValue> {
         let result = Signature::try_from(input);
-        let signed = result.map_err(js_value)?;
+        let signed = result.map_err(error)?;
         let inner = Box::from(signed);
         Ok(Self { inner })
     }
@@ -96,7 +100,7 @@ impl Ed25519PublicKey {
     #[wasm_bindgen]
     pub fn from_bytes(input: &[u8]) -> Result<Ed25519PublicKey, JsValue> {
         let result = PublicKey::from_bytes(input);
-        let public = result.map_err(js_value)?;
+        let public = result.map_err(error)?;
         let inner = Box::from(public);
         Ok(Self { inner })
     }

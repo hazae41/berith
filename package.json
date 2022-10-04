@@ -1,6 +1,6 @@
 {
   "name": "ed25519_dalek",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "author": "hazae41",
   "license": "MIT",
   "description": "WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures",
