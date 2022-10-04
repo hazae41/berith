@@ -1,6 +1,6 @@
 import Ed25519, {
   Ed25519Keypair
-} from "./mod.ts";
+} from "../../deno/mod.ts";
 
 await Ed25519()
 
