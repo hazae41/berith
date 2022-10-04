@@ -85,7 +85,7 @@ const bytes = keypair.sign(input).to_bytes();
 const proof = Ed25519Signature.from_bytes(bytes);
 ```
 
-## Building
+### Building
 
 - Install Deno
 
