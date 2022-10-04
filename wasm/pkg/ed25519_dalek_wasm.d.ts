@@ -80,14 +80,14 @@ export interface InitOutput {
   readonly ed25519keypair_public: (a: number) => number;
   readonly ed25519keypair_sign: (a: number, b: number, c: number) => number;
   readonly __wbg_ed25519signature_free: (a: number) => void;
+  readonly ed25519signature_new: (a: number, b: number, c: number) => void;
   readonly ed25519signature_from_bytes: (a: number, b: number, c: number) => void;
   readonly ed25519signature_to_bytes: (a: number, b: number) => void;
   readonly __wbg_ed25519publickey_free: (a: number) => void;
+  readonly ed25519publickey_new: (a: number, b: number, c: number) => void;
   readonly ed25519publickey_from_bytes: (a: number, b: number, c: number) => void;
   readonly ed25519publickey_to_bytes: (a: number, b: number) => void;
   readonly ed25519publickey_verify: (a: number, b: number, c: number, d: number) => number;
-  readonly ed25519signature_new: (a: number, b: number, c: number) => void;
-  readonly ed25519publickey_new: (a: number, b: number, c: number) => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_malloc: (a: number) => number;
   readonly __wbindgen_free: (a: number, b: number) => void;

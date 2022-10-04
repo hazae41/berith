@@ -1,6 +1,6 @@
 {
   "name": "ed25519_dalek",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "hazae41",
   "license": "MIT",
   "description": "WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures",
@@ -11,8 +11,9 @@
   "sideEffects": false,
   "scripts": {
     "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release",
+    "build:opt": "wasm-opt ./wasm/pkg/ed25519_dalek_wasm_bg.wasm -Oz -o ./wasm/pkg/ed25519_dalek_wasm_bg.wasm",
     "build:package": "rimraf dist && deno run -A build.ts && bunchee -m ./src/index.ts && ttsc",
-    "build": "npm run build:wasm && npm run build:package"
+    "build": "npm run build:wasm && npm run build:opt && npm run build:package"
   },
   "devDependencies": {
     "bunchee": "^2.1.4",
