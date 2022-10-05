@@ -20,5 +20,5 @@ await Deno.writeTextFile(
 await replaceAllFile(
   `./wasm/pkg/ed25519_dalek_wasm.js`,
   `input = new URL('ed25519_dalek_wasm_bg.wasm', import.meta.url);`,
-  `throw new Error("Fuck wasm-bindgen")`
+  `throw new Error()`
 )
