@@ -1,10 +1,25 @@
 # Ed25519 for WebAssembly
 
-WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures.
+WebAssembly port of
+[Ed25519_dalek](https://github.com/dalek-cryptography/ed25519-dalek), a Rust
+implementation of Ed25519 signatures.
+
+### Install (Node)
+
+```bash
+npm i ed25519_dalek
+```
+
+### Test (Deno)
+
+```bash
+deno run --allow-net https://deno.land/x/ed25519_dalek/test/deno/test.ts
+```
 
 ### Benchmark (Deno)
 
-About 5x to 7x faster than `@noble/ed25519`
+About 5x to 7x faster than
+[@noble/ed25519](https://github.com/paulmillr/noble-ed25519)
 
 ```bash
 git clone https://github.com/hazae41/ed25519-dalek-wasm && cd ed25519-dalek-wasm/bench/deno && npm run bench
@@ -34,26 +49,17 @@ summary
 
 ### Benchmark (Node)
 
-Not as fast as `supercop.wasm` (Emscripten port of `@orlp/ed25519`) as
-`Ed25519_dalek` doesn't use sha512 yet
+Not as fast as [supercop.wasm](https://github.com/nazar-pc/supercop.wasm)
+(Emscripten port of [@orlp/ed25519](https://github.com/orlp/ed25519), a C
+implementation of Ed25519) because
+[Ed25519_dalek](https://github.com/dalek-cryptography/ed25519-dalek) doesn't use
+sha512 yet
 
 ```
 ed25519_dalek 1.1.8 (unserialized) 4,069 ops/sec ±0.05% (12209 samples)
 ed25519_dalek 1.1.8 (serialized) 3,541 ops/sec ±0.07% (10624 samples)
 @noble/ed25519 1.7.1 584 ops/sec ±0.22% (1740 samples)
 supercop.wasm 5.0.1 5,931 ops/sec ±0.1% (17782 samples)
-```
-
-### Install (Node)
-
-```bash
-npm i ed25519_dalek
-```
-
-### Test (Deno)
-
-```bash
-deno run --allow-net https://deno.land/x/ed25519_dalek/test/deno/test.ts
 ```
 
 ### Basic usage
@@ -106,15 +112,16 @@ const proof = Ed25519Signature.from_bytes(bytes);
 
 ### Building
 
-- Install Deno
+- Install [Deno](https://github.com/denoland/deno)
 
 https://deno.land
 
-- Install binaryen (for wasm-opt) and add it your PATH
+- Install [binaryen](https://github.com/WebAssembly/binaryen) (for wasm-opt) and
+  add it your PATH
 
 https://github.com/WebAssembly/binaryen/releases
 
-- Install wasm-pack
+- Install [wasm-pack](https://github.com/rustwasm/wasm-pack)
 
 ```bash
 cargo install wasm-pack
