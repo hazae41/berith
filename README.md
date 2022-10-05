@@ -2,7 +2,7 @@
 
 WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures.
 
-### Benchmark
+### Benchmark (Deno)
 
 About 5x to 7x faster than `@noble/ed25519`
 
@@ -30,6 +30,18 @@ ed25519_dalek 1.1.8 (serialized)    354.74 µs/iter (346.42 µs … 503.04 µs) 
 summary
   ed25519_dalek 1.1.8 (serialized)
    5.79x faster than @noble/ed25519 1.7.1
+```
+
+### Benchmark (Node)
+
+Not as fast as `supercop.wasm` (Emscripten port of `@orlp/ed25519') as
+Ed25519_dalek doesn't use sha512 yet
+
+```
+ed25519_dalek 1.1.8 (unserialized) 4,069 ops/sec ±0.05% (12209 samples)
+ed25519_dalek 1.1.8 (serialized) 3,541 ops/sec ±0.07% (10624 samples)
+@noble/ed25519 1.7.1 584 ops/sec ±0.22% (1740 samples)
+supercop.wasm 5.0.1 5,931 ops/sec ±0.1% (17782 samples)
 ```
 
 ### Install (Node)

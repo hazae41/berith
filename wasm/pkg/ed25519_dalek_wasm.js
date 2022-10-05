@@ -1,6 +1,35 @@
 
 let wasm;
 
+const heap = new Array(32).fill(undefined);
+
+heap.push(undefined, null, true, false);
+
+function getObject(idx) { return heap[idx]; }
+
+let heap_next = heap.length;
+
+function dropObject(idx) {
+    if (idx < 36) return;
+    heap[idx] = heap_next;
+    heap_next = idx;
+}
+
+function takeObject(idx) {
+    const ret = getObject(idx);
+    dropObject(idx);
+    return ret;
+}
+
+function addHeapObject(obj) {
+    if (heap_next === heap.length) heap.push(heap.length + 1);
+    const idx = heap_next;
+    heap_next = heap[idx];
+
+    heap[idx] = obj;
+    return idx;
+}
+
 const cachedTextDecoder = new TextDecoder('utf-8', { ignoreBOM: true, fatal: true });
 
 cachedTextDecoder.decode();
@@ -16,35 +45,6 @@ function getUint8Memory0() {
 
 function getStringFromWasm0(ptr, len) {
     return cachedTextDecoder.decode(getUint8Memory0().subarray(ptr, ptr + len));
-}
-
-const heap = new Array(32).fill(undefined);
-
-heap.push(undefined, null, true, false);
-
-let heap_next = heap.length;
-
-function addHeapObject(obj) {
-    if (heap_next === heap.length) heap.push(heap.length + 1);
-    const idx = heap_next;
-    heap_next = heap[idx];
-
-    heap[idx] = obj;
-    return idx;
-}
-
-function getObject(idx) { return heap[idx]; }
-
-function dropObject(idx) {
-    if (idx < 36) return;
-    heap[idx] = heap_next;
-    heap_next = idx;
-}
-
-function takeObject(idx) {
-    const ret = getObject(idx);
-    dropObject(idx);
-    return ret;
 }
 
 let WASM_VECTOR_LEN = 0;
@@ -196,7 +196,7 @@ export class Ed25519PublicKey {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
             const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
-            wasm.ed25519publickey_new(retptr, ptr0, len0);
+            wasm.ed25519publickey_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
             var r2 = getInt32Memory0()[retptr / 4 + 2];
@@ -290,7 +290,7 @@ export class Ed25519Signature {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
             const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
-            wasm.ed25519signature_new(retptr, ptr0, len0);
+            wasm.ed25519signature_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
             var r2 = getInt32Memory0()[retptr / 4 + 2];
@@ -375,10 +375,6 @@ async function load(module, imports) {
 function getImports() {
     const imports = {};
     imports.wbg = {};
-    imports.wbg.__wbindgen_string_new = function(arg0, arg1) {
-        const ret = getStringFromWasm0(arg0, arg1);
-        return addHeapObject(ret);
-    };
     imports.wbg.__wbg_self_7eede1f4488bf346 = function() { return handleError(function () {
         const ret = self.self;
         return addHeapObject(ret);
@@ -389,6 +385,17 @@ function getImports() {
     };
     imports.wbg.__wbg_msCrypto_511eefefbfc70ae4 = function(arg0) {
         const ret = getObject(arg0).msCrypto;
+        return addHeapObject(ret);
+    };
+    imports.wbg.__wbindgen_is_undefined = function(arg0) {
+        const ret = getObject(arg0) === undefined;
+        return ret;
+    };
+    imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
+        takeObject(arg0);
+    };
+    imports.wbg.__wbg_static_accessor_MODULE_ef3aa2eb251158a5 = function() {
+        const ret = module;
         return addHeapObject(ret);
     };
     imports.wbg.__wbg_require_900d5c3984fe7703 = function(arg0, arg1, arg2) {
@@ -432,15 +439,8 @@ function getImports() {
     imports.wbg.__wbg_set_83db9690f9353e79 = function(arg0, arg1, arg2) {
         getObject(arg0).set(getObject(arg1), arg2 >>> 0);
     };
-    imports.wbg.__wbindgen_is_undefined = function(arg0) {
-        const ret = getObject(arg0) === undefined;
-        return ret;
-    };
-    imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
-        takeObject(arg0);
-    };
-    imports.wbg.__wbg_static_accessor_MODULE_ef3aa2eb251158a5 = function() {
-        const ret = module;
+    imports.wbg.__wbindgen_string_new = function(arg0, arg1) {
+        const ret = getStringFromWasm0(arg0, arg1);
         return addHeapObject(ret);
     };
     imports.wbg.__wbindgen_throw = function(arg0, arg1) {
