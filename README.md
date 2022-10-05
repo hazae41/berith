@@ -34,8 +34,8 @@ summary
 
 ### Benchmark (Node)
 
-Not as fast as `supercop.wasm` (Emscripten port of `@orlp/ed25519') as
-Ed25519_dalek doesn't use sha512 yet
+Not as fast as `supercop.wasm` (Emscripten port of `@orlp/ed25519`) as
+`Ed25519_dalek` doesn't use sha512 yet
 
 ```
 ed25519_dalek 1.1.8 (unserialized) 4,069 ops/sec ±0.05% (12209 samples)
