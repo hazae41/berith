@@ -4,7 +4,7 @@ WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures.
 
 ### Benchmark
 
-6.99x times faster than `@noble/ed25519`
+About 5x to 7x faster than `@noble/ed25519`
 
 ```bash
 git clone https://github.com/hazae41/ed25519-dalek-wasm && cd ed25519-dalek-wasm/bench/deno && npm run bench
@@ -12,17 +12,24 @@ git clone https://github.com/hazae41/ed25519-dalek-wasm && cd ed25519-dalek-wasm
 
 ```
 cpu: Apple M1 Max
-runtime: deno 1.21.0 (aarch64-apple-darwin)
+runtime: deno 1.26.0 (aarch64-apple-darwin)
 
-file://ed25519-dalek-wasm/bench/deno/bench.ts
-benchmark           time (avg)             (min … max)       p75       p99      p995
------------------------------------------------------- -----------------------------
-ed25519_dalek   314.62 µs/iter (306.71 µs … 704.42 µs) 314.29 µs 340.12 µs 353.58 µs
-@noble/ed25519     2.2 ms/iter     (2.06 ms … 2.64 ms)   2.23 ms   2.43 ms   2.55 ms
+file:///Users/hg/Travail/ed25519-dalek-wasm/bench/deno/bench.ts
+benchmark                               time (avg)             (min … max)       p75       p99      p995
+-------------------------------------------------------------------------- -----------------------------
+ed25519_dalek 1.1.8 (unserialized)  313.56 µs/iter (303.83 µs … 434.62 µs) 314.04 µs 342.88 µs 349.38 µs
+@noble/ed25519 1.7.1                  2.14 ms/iter     (1.92 ms … 2.67 ms)   2.18 ms   2.36 ms   2.38 ms
 
 summary
-  ed25519_dalek
-   6.99x times faster than @noble/ed25519
+  ed25519_dalek 1.1.8 (unserialized)
+   6.81x faster than @noble/ed25519 1.7.1
+
+ed25519_dalek 1.1.8 (serialized)    354.74 µs/iter (346.42 µs … 503.04 µs) 355.38 µs 381.29 µs 392.71 µs
+@noble/ed25519 1.7.1                  2.05 ms/iter     (1.92 ms … 2.24 ms)   2.09 ms   2.23 ms   2.24 ms
+
+summary
+  ed25519_dalek 1.1.8 (serialized)
+   5.79x faster than @noble/ed25519 1.7.1
 ```
 
 ### Install (Node)
