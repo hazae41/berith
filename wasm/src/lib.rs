@@ -10,9 +10,6 @@ use ed25519_dalek::{Keypair, PublicKey, Signature, Signer, Verifier};
 
 use rand::rngs::OsRng;
 
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
 #[wasm_bindgen]
 pub struct Ed25519Keypair {
     inner: Box<Keypair>,
