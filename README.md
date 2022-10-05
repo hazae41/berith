@@ -51,9 +51,7 @@ summary
 
 Not as fast as [supercop.wasm](https://github.com/nazar-pc/supercop.wasm)
 (Emscripten port of [@orlp/ed25519](https://github.com/orlp/ed25519), a C
-implementation of Ed25519) because
-[Ed25519_dalek](https://github.com/dalek-cryptography/ed25519-dalek) doesn't use
-sha512 yet
+implementation of Ed25519)
 
 ```
 ed25519_dalek 1.1.8 (unserialized) 4,069 ops/sec ±0.05% (12209 samples)
