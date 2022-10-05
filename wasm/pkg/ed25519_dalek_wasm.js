@@ -480,7 +480,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        throw new Error("Fuck wasm-bindgen")
+        throw new Error()
     }
     const imports = getImports();
 
