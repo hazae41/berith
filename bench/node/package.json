@@ -5,8 +5,7 @@
   },
   "devDependencies": {
     "@noble/ed25519": "^1.7.1",
-    "ed25519": "^0.0.5",
-    "ed25519_dalek": "^1.1.8",
+    "ed25519_dalek": "^1.1.11",
     "nodemark": "^0.3.0",
     "supercop.wasm": "^5.0.1"
   },

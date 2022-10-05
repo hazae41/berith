@@ -18,7 +18,7 @@ deno run --allow-net https://deno.land/x/ed25519_dalek/test/deno/test.ts
 
 ### Benchmark (Deno)
 
-About 5x to 7x faster than
+About 6x to 8x faster than
 [@noble/ed25519](https://github.com/paulmillr/noble-ed25519)
 
 ```bash
@@ -29,22 +29,21 @@ git clone https://github.com/hazae41/ed25519-dalek-wasm && cd ed25519-dalek-wasm
 cpu: Apple M1 Max
 runtime: deno 1.26.0 (aarch64-apple-darwin)
 
-file:///Users/hg/Travail/ed25519-dalek-wasm/bench/deno/bench.ts
-benchmark                               time (avg)             (min … max)       p75       p99      p995
--------------------------------------------------------------------------- -----------------------------
-ed25519_dalek 1.1.8 (unserialized)  313.56 µs/iter (303.83 µs … 434.62 µs) 314.04 µs 342.88 µs 349.38 µs
-@noble/ed25519 1.7.1                  2.14 ms/iter     (1.92 ms … 2.67 ms)   2.18 ms   2.36 ms   2.38 ms
+benchmark                                time (avg)             (min … max)       p75       p99      p995
+--------------------------------------------------------------------------- -----------------------------
+ed25519_dalek 1.1.11 (unserialized)  289.94 µs/iter (281.71 µs … 370.79 µs) 290.75 µs  311.5 µs 320.08 µs
+@noble/ed25519 1.7.1                    2.1 ms/iter     (1.95 ms … 2.77 ms)   2.14 ms    2.3 ms   2.39 ms
 
 summary
-  ed25519_dalek 1.1.8 (unserialized)
-   6.81x faster than @noble/ed25519 1.7.1
+  ed25519_dalek 1.1.11 (unserialized)
+   7.25x faster than @noble/ed25519 1.7.1
 
-ed25519_dalek 1.1.8 (serialized)    354.74 µs/iter (346.42 µs … 503.04 µs) 355.38 µs 381.29 µs 392.71 µs
-@noble/ed25519 1.7.1                  2.05 ms/iter     (1.92 ms … 2.24 ms)   2.09 ms   2.23 ms   2.24 ms
+ed25519_dalek 1.1.11 (serialized)    332.09 µs/iter    (323.17 µs … 474 µs) 332.38 µs 361.46 µs 368.25 µs
+@noble/ed25519 1.7.1                   2.07 ms/iter     (1.95 ms … 2.32 ms)   2.12 ms   2.26 ms   2.26 ms
 
 summary
-  ed25519_dalek 1.1.8 (serialized)
-   5.79x faster than @noble/ed25519 1.7.1
+  ed25519_dalek 1.1.11 (serialized)
+   6.23x faster than @noble/ed25519 1.7.1
 ```
 
 ### Benchmark (Node)
@@ -53,11 +52,15 @@ Not as fast as [supercop.wasm](https://github.com/nazar-pc/supercop.wasm)
 (Emscripten port of [@orlp/ed25519](https://github.com/orlp/ed25519), a C
 implementation of Ed25519)
 
+```bash
+git clone https://github.com/hazae41/ed25519-dalek-wasm && cd ed25519-dalek-wasm/bench/node && npm i && npm run bench
 ```
-ed25519_dalek 1.1.8 (unserialized) 4,069 ops/sec ±0.05% (12209 samples)
-ed25519_dalek 1.1.8 (serialized) 3,541 ops/sec ±0.07% (10624 samples)
-@noble/ed25519 1.7.1 584 ops/sec ±0.22% (1740 samples)
-supercop.wasm 5.0.1 5,931 ops/sec ±0.1% (17782 samples)
+
+```
+ed25519_dalek 1.1.11 (unserialized) 4,063 ops/sec ±0.06% (12190 samples)
+ed25519_dalek 1.1.11 (serialized) 3,535 ops/sec ±0.08% (10611 samples)
+@noble/ed25519 1.7.1 483 ops/sec ±0.29% (1440 samples)
+supercop.wasm 5.0.1 5,910 ops/sec ±0.21% (17723 samples)
 ```
 
 ### Basic usage

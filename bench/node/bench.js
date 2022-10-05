@@ -9,7 +9,7 @@ noble.utils.sha512Sync = (...m) => sha512(noble.utils.concatBytes(...m));
 await Ed25519.default()
 
 supercop.ready(() => {
-  console.log("ed25519_dalek 1.1.8 (unserialized)", benchmark(() => {
+  console.log("ed25519_dalek 1.1.11 (unserialized)", benchmark(() => {
     const keypair = new Ed25519Keypair()
     const identity = keypair.public()
     const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde]);
@@ -17,7 +17,7 @@ supercop.ready(() => {
     identity.verify(message, proof)
   }))
 
-  console.log("ed25519_dalek 1.1.8 (serialized)", benchmark(() => {
+  console.log("ed25519_dalek 1.1.11 (serialized)", benchmark(() => {
     const keypair = new Ed25519Keypair().to_bytes()
     const identity = Ed25519Keypair.from_bytes(keypair).public().to_bytes()
     const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde]);
