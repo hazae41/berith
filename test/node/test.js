@@ -1,8 +1,8 @@
-import Ed25519, {
-  Ed25519Keypair
-} from "../../deno/mod.ts";
+import Ed25519, { Ed25519Keypair } from "ed25519_dalek";
 
-await Ed25519()
+console.log(Ed25519)
+
+await Ed25519.default()
 
 const keypair = new Ed25519Keypair()
 console.log("keypair", keypair.to_bytes())

@@ -1,5 +1,6 @@
 import * as noble from '@noble/ed25519';
 import { sha512 } from '@noble/hashes/sha512';
+import crypto from "crypto";
 import Ed25519, { Ed25519Keypair, Ed25519PublicKey } from 'ed25519_dalek';
 import benchmark from "nodemark";
 import supercop from 'supercop.wasm';
@@ -9,7 +10,8 @@ noble.utils.sha512Sync = (...m) => sha512(noble.utils.concatBytes(...m));
 await Ed25519.default()
 
 supercop.ready(() => {
-  console.log("ed25519_dalek 1.1.11 (unserialized)", benchmark(() => {
+
+  console.log("ed25519_dalek 1.1.12 (unserialized)", benchmark(() => {
     const keypair = new Ed25519Keypair()
     const identity = keypair.public()
     const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde]);
@@ -17,7 +19,7 @@ supercop.ready(() => {
     identity.verify(message, proof)
   }))
 
-  console.log("ed25519_dalek 1.1.11 (serialized)", benchmark(() => {
+  console.log("ed25519_dalek 1.1.12 (serialized)", benchmark(() => {
     const keypair = new Ed25519Keypair().to_bytes()
     const identity = Ed25519Keypair.from_bytes(keypair).public().to_bytes()
     const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde]);
@@ -35,9 +37,26 @@ supercop.ready(() => {
 
   console.log("supercop.wasm 5.0.1", benchmark(() => {
     const seed = supercop.createSeed()
-    const keys = supercop.createKeyPair(seed)
+    const keypair = supercop.createKeyPair(seed)
     const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde]);
-    const sig = supercop.sign(message, keys.publicKey, keys.secretKey)
-    supercop.verify(sig, message, keys.publicKey)
+    const signature = supercop.sign(message, keypair.publicKey, keypair.secretKey)
+    supercop.verify(signature, message, keypair.publicKey)
   }))
+
+  console.log("node:crypto (unserialized)", benchmark(() => {
+    const keypair = crypto.generateKeyPairSync("ed25519")
+    const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde])
+    const signature = crypto.sign(undefined, message, keypair.privateKey)
+    crypto.verify(undefined, message, keypair.publicKey, signature)
+  }))
+
+  console.log("node:crypto (serialized)", benchmark(() => {
+    const keypair = crypto.generateKeyPairSync("ed25519")
+    const privateKey = keypair.privateKey.export({ type: "pkcs8", format: "pem" })
+    const publicKey = keypair.publicKey.export({ type: "spki", format: "pem" })
+    const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde])
+    const signature = crypto.sign(undefined, message, crypto.createPrivateKey(privateKey))
+    crypto.verify(undefined, message, crypto.createPublicKey(publicKey), signature)
+  }))
+
 })

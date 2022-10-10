@@ -5,6 +5,7 @@ export {
 } from "../wasm/pkg/ed25519_dalek_wasm.js";
 
 import init from "../wasm/pkg/ed25519_dalek_wasm.js";
+
 import { wasm } from "../wasm/pkg/ed25519_dalek_wasm.wasm.js";
 
 let module: Promise<unknown> | undefined = undefined

@@ -3,13 +3,11 @@
   "scripts": {
     "bench": "node bench.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "@noble/ed25519": "^1.7.1",
-    "ed25519_dalek": "^1.1.11",
+    "@noble/hashes": "^1.1.3",
+    "ed25519_dalek": "^1.1.12",
     "nodemark": "^0.3.0",
     "supercop.wasm": "^5.0.1"
-  },
-  "dependencies": {
-    "@noble/hashes": "^1.1.3"
   }
 }

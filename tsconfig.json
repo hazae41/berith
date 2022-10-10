@@ -2,12 +2,11 @@
   "compilerOptions": {
     "baseUrl": "./node",
     "outDir": "dist",
-    "target": "ES5",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "module": "esnext",
-    "moduleResolution": "node",
     "paths": {
       "mods/*": [
         "mods/*"

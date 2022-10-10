@@ -57,10 +57,12 @@ git clone https://github.com/hazae41/ed25519-dalek-wasm && cd ed25519-dalek-wasm
 ```
 
 ```
-ed25519_dalek 1.1.11 (unserialized) 4,063 ops/sec ±0.06% (12190 samples)
-ed25519_dalek 1.1.11 (serialized) 3,535 ops/sec ±0.08% (10611 samples)
-@noble/ed25519 1.7.1 483 ops/sec ±0.29% (1440 samples)
-supercop.wasm 5.0.1 5,910 ops/sec ±0.21% (17723 samples)
+ed25519_dalek 1.1.12 (unserialized) 4,072 ops/sec ±0.06% (12215 samples)
+ed25519_dalek 1.1.12 (serialized) 3,544 ops/sec ±0.09% (10638 samples)
+@noble/ed25519 1.7.1 485 ops/sec ±0.23% (1447 samples)
+supercop.wasm 5.0.1 5,902 ops/sec ±0.2% (17698 samples)
+node:crypto (unserialized) 7,102 ops/sec ±1.6% (21228 samples)
+node:crypto (serialized) 5,648 ops/sec ±0.52% (16914 samples)
 ```
 
 ### Basic usage

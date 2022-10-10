@@ -3,7 +3,13 @@
   "collaborators": [
     "hazae41 <hazae41@proton.me>"
   ],
+  "description": "WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures",
   "version": "1.0.0",
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hazae41/ed25519-dalek-wasm"
+  },
   "files": [
     "ed25519_dalek_wasm_bg.wasm",
     "ed25519_dalek_wasm.js",
