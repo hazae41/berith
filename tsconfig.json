@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
+    "target": "ES5",
     "baseUrl": "./node",
-    "outDir": "dist",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
+    "downlevelIteration": true,
     "paths": {
       "mods/*": [
         "mods/*"

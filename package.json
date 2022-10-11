@@ -1,23 +1,26 @@
 {
-  "type": "commonjs",
+  "type": "module",
   "name": "ed25519_dalek",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "author": "hazae41",
   "license": "Unlicense",
   "description": "WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures",
   "homepage": "https://github.com/hazae41/ed25519-dalek-wasm",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.cjs",
+  "types": "./dist/types/node/index.d.ts",
+  "main": "./dist/cjs/node/index.cjs",
   "sideEffects": false,
   "scripts": {
     "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release",
-    "build:dist": "rimraf dist && deno run -A build.ts && bunchee -m ./node/index.ts && ttsc",
+    "build:dist": "rimraf dist && deno run -A build.ts && rollup -c",
     "build": "npm run build:wasm && npm run build:dist"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^23.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^9.0.1",
     "@types/node": "^18.8.4",
-    "bunchee": "2.0.1",
     "rimraf": "^3.0.2",
+    "rollup-plugin-dts": "^4.2.3",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
     "ttypescript": "^1.5.13",
@@ -27,8 +30,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.cjs",
-      "require": "./dist/index.cjs"
+      "import": "./dist/cjs/node/index.cjs",
+      "require": "./dist/cjs/node/index.cjs"
     }
   }
 }
