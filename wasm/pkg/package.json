@@ -13,7 +13,8 @@
   "files": [
     "ed25519_dalek_wasm_bg.wasm",
     "ed25519_dalek_wasm.js",
-    "ed25519_dalek_wasm.d.ts"
+    "ed25519_dalek_wasm.d.ts",
+    "LICENSE.md"
   ],
   "module": "ed25519_dalek_wasm.js",
   "types": "ed25519_dalek_wasm.d.ts",
