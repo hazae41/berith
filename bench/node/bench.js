@@ -1,17 +1,18 @@
 import * as noble from '@noble/ed25519';
 import { sha512 } from '@noble/hashes/sha512';
 import crypto from "crypto";
-import Ed25519, { Ed25519Keypair, Ed25519PublicKey } from 'ed25519_dalek';
+import * as Ed25519 from 'ed25519_dalek';
+import { Ed25519Keypair, Ed25519PublicKey } from 'ed25519_dalek';
 import benchmark from "nodemark";
 import supercop from 'supercop.wasm';
 
-noble.utils.sha512Sync = (...m) => sha512(noble.utils.concatBytes(...m));
+Ed25519.initSyncBundledOnce()
 
-await Ed25519.default()
+noble.utils.sha512Sync = (...m) => sha512(noble.utils.concatBytes(...m));
 
 supercop.ready(() => {
 
-  console.log("ed25519_dalek 1.1.12 (unserialized)", benchmark(() => {
+  console.log("ed25519_dalek 1.1.14 (unserialized)", benchmark(() => {
     const keypair = new Ed25519Keypair()
     const identity = keypair.public()
     const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde]);
@@ -19,7 +20,7 @@ supercop.ready(() => {
     identity.verify(message, proof)
   }))
 
-  console.log("ed25519_dalek 1.1.12 (serialized)", benchmark(() => {
+  console.log("ed25519_dalek 1.1.14 (serialized)", benchmark(() => {
     const keypair = new Ed25519Keypair().to_bytes()
     const identity = Ed25519Keypair.from_bytes(keypair).public().to_bytes()
     const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde]);
