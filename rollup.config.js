@@ -8,12 +8,6 @@ export const config = [
   {
     input: "./node/index.ts",
     output: [{
-      dir: "./dist/mjs",
-      format: "esm",
-      preserveModules: true,
-      sourcemap: true,
-      entryFileNames: "[name].mjs",
-    }, {
       dir: "./dist/cjs",
       format: "cjs",
       preserveModules: true,
