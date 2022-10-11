@@ -10,6 +10,7 @@ export const config = [
     output: [{
       dir: "./dist/cjs",
       format: "cjs",
+      exports: "named",
       preserveModules: true,
       sourcemap: true,
       entryFileNames: "[name].cjs",
@@ -21,6 +22,7 @@ export const config = [
     output: [{
       dir: "./dist/types",
       format: "esm",
+      exports: "named",
       preserveModules: true,
       entryFileNames: "[name].d.ts",
     }],
