@@ -16,9 +16,3 @@ await Deno.writeTextFile(
   `./wasm/pkg/ed25519_dalek_wasm.wasm.d.ts`,
   `export const wasm: string;`
 );
-
-await replaceAllFile(
-  `./wasm/pkg/ed25519_dalek_wasm.js`,
-  `input = new URL('ed25519_dalek_wasm_bg.wasm', import.meta.url);`,
-  `throw new Error()`
-)

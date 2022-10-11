@@ -1,8 +1,7 @@
-import Ed25519, { Ed25519Keypair } from "ed25519_dalek";
+import * as Ed25519 from "ed25519_dalek";
+import { Ed25519Keypair } from "ed25519_dalek";
 
-console.log(Ed25519)
-
-await Ed25519.default()
+Ed25519.initSyncBundledOnce()
 
 const keypair = new Ed25519Keypair()
 console.log("keypair", keypair.to_bytes())

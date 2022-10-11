@@ -480,7 +480,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        throw new Error()
+        input = new URL('ed25519_dalek_wasm_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 

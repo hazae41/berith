@@ -1,13 +1,13 @@
 {
   "type": "commonjs",
   "name": "ed25519_dalek",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "author": "hazae41",
   "license": "Unlicense",
   "description": "WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures",
   "homepage": "https://github.com/hazae41/ed25519-dalek-wasm",
-  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
   "sideEffects": false,
   "scripts": {
     "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release",
@@ -27,8 +27,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "import": "./dist/index.cjs",
+      "require": "./dist/index.cjs"
     }
   }
 }

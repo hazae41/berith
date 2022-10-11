@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./node",
     "outDir": "dist",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "strict": true,
     "declaration": true,
     "emitDeclarationOnly": true,

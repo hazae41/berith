@@ -68,22 +68,15 @@ node:crypto (serialized) 5,648 ops/sec ±0.52% (16914 samples)
 ### Basic usage
 
 ```typescript
-// Deno
-import Ed25519, {
+import * as Ed25519 from "ed25519_dalek";
+import {
   Ed25519Keypair,
   Ed25519PublicKey,
   Ed25519Signature,
-} from "https://deno.land/x/ed25519_dalek/deno/mod.ts";
-
-// Node
-// import Ed25519, {
-//   Ed25519Keypair,
-//   Ed25519PublicKey,
-//   Ed25519Signature,
-// } from "ed25519_dalek";
+} from "ed25519_dalek";
 
 // -- Wait for WASM to load --
-await Ed25519();
+Ed25519.initSyncBundledOnce();
 
 // -- Generating an identity --
 const keypair = new Ed25519Keypair();
