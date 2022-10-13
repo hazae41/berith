@@ -1,9 +1,9 @@
 {
-  "name": "ed25519_dalek_wasm",
+  "name": "berith",
   "collaborators": [
     "hazae41 <hazae41@proton.me>"
   ],
-  "description": "WebAssembly port of Ed25519_dalek, a Rust implementation of Ed25519 signatures",
+  "description": "WebAssembly port of Dalek's Ed25519, a Rust implementation of Ed25519 signatures",
   "version": "1.0.0",
   "license": "Unlicense",
   "repository": {
@@ -11,12 +11,12 @@
     "url": "https://github.com/hazae41/ed25519-dalek-wasm"
   },
   "files": [
-    "ed25519_dalek_wasm_bg.wasm",
-    "ed25519_dalek_wasm.js",
-    "ed25519_dalek_wasm.d.ts",
+    "berith_bg.wasm",
+    "berith.js",
+    "berith.d.ts",
     "LICENSE.md"
   ],
-  "module": "ed25519_dalek_wasm.js",
-  "types": "ed25519_dalek_wasm.d.ts",
+  "module": "berith.js",
+  "types": "berith.d.ts",
   "sideEffects": false
 }

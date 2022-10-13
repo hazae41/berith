@@ -1,7 +1,7 @@
-import * as Ed25519 from "ed25519_dalek";
-import { Ed25519Keypair } from "ed25519_dalek";
+import * as Berith from "@hazae41/berith";
+import { Ed25519Keypair } from "@hazae41/berith";
 
-Ed25519.initSyncBundledOnce()
+Berith.initSyncBundledOnce()
 
 const keypair = new Ed25519Keypair()
 console.log("keypair", keypair.to_bytes())

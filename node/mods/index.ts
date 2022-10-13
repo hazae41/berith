@@ -1,7 +1,7 @@
-export * from "../../wasm/pkg/ed25519_dalek_wasm.js";
+export * from "../../wasm/pkg/berith.js";
 
-import { InitOutput, initSync } from "../../wasm/pkg/ed25519_dalek_wasm.js";
-import { wasm } from "../../wasm/pkg/ed25519_dalek_wasm.wasm.js";
+import { InitOutput, initSync } from "../../wasm/pkg/berith.js";
+import { wasm } from "../../wasm/pkg/berith.wasm.js";
 
 let output: InitOutput | undefined = undefined
 

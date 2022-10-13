@@ -1,18 +1,13 @@
 import * as Base64 from "https://deno.land/std@0.158.0/encoding/base64.ts";
 
-const wasm = await Deno.readFile("./wasm/pkg/ed25519_dalek_wasm_bg.wasm");
-
-async function replaceAllFile(path: string, search: string, replace: string) {
-  const content = await Deno.readTextFile(path)
-  await Deno.writeTextFile(path, content.replaceAll(search, replace))
-}
+const wasm = await Deno.readFile("./wasm/pkg/berith_bg.wasm");
 
 await Deno.writeTextFile(
-  `./wasm/pkg/ed25519_dalek_wasm.wasm.js`,
+  `./wasm/pkg/berith.wasm.js`,
   `export const wasm = "${Base64.encode(wasm)}";`
 );
 
 await Deno.writeTextFile(
-  `./wasm/pkg/ed25519_dalek_wasm.wasm.d.ts`,
+  `./wasm/pkg/berith.wasm.d.ts`,
   `export const wasm: string;`
 );

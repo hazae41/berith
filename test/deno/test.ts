@@ -1,7 +1,7 @@
-import * as Ed25519 from "../../deno/mod.ts";
+import * as Berith from "../../deno/mod.ts";
 import { Ed25519Keypair } from "../../deno/mod.ts";
 
-Ed25519.initSyncBundledOnce()
+Berith.initSyncBundledOnce()
 
 const keypair = new Ed25519Keypair()
 console.log("keypair", keypair.to_bytes())

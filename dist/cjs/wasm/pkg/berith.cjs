@@ -447,4 +447,4 @@ exports.Ed25519Keypair = Ed25519Keypair;
 exports.Ed25519PublicKey = Ed25519PublicKey;
 exports.Ed25519Signature = Ed25519Signature;
 exports.initSync = initSync;
-//# sourceMappingURL=ed25519_dalek_wasm.cjs.map
+//# sourceMappingURL=berith.cjs.map
