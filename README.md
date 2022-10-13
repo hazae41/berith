@@ -65,7 +65,7 @@ node:crypto (unserialized) 7,102 ops/sec ±1.6% (21228 samples)
 node:crypto (serialized) 5,648 ops/sec ±0.52% (16914 samples)
 ```
 
-### Basic usage
+### Usage
 
 ```typescript
 import * as Ed25519 from "ed25519_dalek";
@@ -85,7 +85,7 @@ const proof = keypair.sign(bytes); // Ed25519Signature
 const verified = identity.verify(bytes, proof); // boolean
 ```
 
-### Serializing to Uint8Array
+You can serialize and deserialize to Uint8Array
 
 ```typescript
 const bytes = new Ed25519Keypair().to_bytes();
