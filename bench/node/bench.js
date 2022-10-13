@@ -12,7 +12,7 @@ noble.utils.sha512Sync = (...m) => sha512(noble.utils.concatBytes(...m));
 
 supercop.ready(() => {
 
-  console.log("@hazae41/berith 1.1.17 (unserialized)", benchmark(() => {
+  console.log("@hazae41/berith 1.1.18 (unserialized)", benchmark(() => {
     const keypair = new Ed25519Keypair()
     const identity = keypair.public()
     const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde]);
@@ -20,7 +20,7 @@ supercop.ready(() => {
     identity.verify(message, proof)
   }))
 
-  console.log("@hazae41/berith 1.1.17 (serialized)", benchmark(() => {
+  console.log("@hazae41/berith 1.1.18 (serialized)", benchmark(() => {
     const keypair = new Ed25519Keypair().to_bytes()
     const identity = Ed25519Keypair.from_bytes(keypair).public().to_bytes()
     const message = Uint8Array.from([0xab, 0xbc, 0xcd, 0xde]);
