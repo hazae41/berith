@@ -71,16 +71,17 @@ node:crypto (serialized) 5,648 ops/sec ±0.52% (16914 samples)
 import * as Ed25519 from "ed25519_dalek";
 import { Ed25519Keypair, Ed25519PublicKey, Ed25519Signature } from "ed25519_dalek";
 
-// -- Wait for WASM to load --
+// Wait for WASM to load
 Ed25519.initSyncBundledOnce();
 
-// -- Generating an identity --
+// Generate an identity
 const keypair = new Ed25519Keypair();
 const identity = keypair.public(); // Ed25519PublicKey
 
-// -- Signing & Verifying --
+// Define bytes to sign
 const bytes = new TextEncoder().encode("hello world"); // Uint8Array
 
+// Sign and verify
 const proof = keypair.sign(bytes); // Ed25519Signature
 const verified = identity.verify(bytes, proof); // boolean
 ```
