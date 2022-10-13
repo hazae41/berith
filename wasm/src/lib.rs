@@ -21,6 +21,7 @@ impl Ed25519Keypair {
     pub fn new() -> Self {
         let keypair = Keypair::generate(&mut OsRng {});
         let inner = Box::new(keypair);
+
         Self { inner }
     }
 
@@ -29,6 +30,7 @@ impl Ed25519Keypair {
         let result = Keypair::from_bytes(input);
         let keypair = result.map_err(|_| JsValue::from("Error"))?;
         let inner = Box::new(keypair);
+
         Ok(Self { inner })
     }
 
@@ -41,6 +43,7 @@ impl Ed25519Keypair {
     pub fn public(&self) -> Ed25519PublicKey {
         let public = self.inner.public;
         let inner = Box::new(public);
+
         Ed25519PublicKey { inner }
     }
 
@@ -48,6 +51,7 @@ impl Ed25519Keypair {
     pub fn sign(&self, input: &[u8]) -> Ed25519Signature {
         let signed = self.inner.sign(input);
         let inner = Box::new(signed);
+
         Ed25519Signature { inner }
     }
 }
@@ -69,6 +73,7 @@ impl Ed25519Signature {
         let result = Signature::try_from(input);
         let signed = result.map_err(|_| JsValue::from("Error"))?;
         let inner = Box::from(signed);
+
         Ok(Self { inner })
     }
 
@@ -95,6 +100,7 @@ impl Ed25519PublicKey {
         let result = PublicKey::from_bytes(input);
         let public = result.map_err(|_| JsValue::from("Error"))?;
         let inner = Box::from(public);
+
         Ok(Self { inner })
     }
 
