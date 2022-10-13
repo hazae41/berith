@@ -69,11 +69,7 @@ node:crypto (serialized) 5,648 ops/sec ±0.52% (16914 samples)
 
 ```typescript
 import * as Ed25519 from "ed25519_dalek";
-import {
-  Ed25519Keypair,
-  Ed25519PublicKey,
-  Ed25519Signature,
-} from "ed25519_dalek";
+import { Ed25519Keypair, Ed25519PublicKey, Ed25519Signature } from "ed25519_dalek";
 
 // -- Wait for WASM to load --
 Ed25519.initSyncBundledOnce();
