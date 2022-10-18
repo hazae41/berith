@@ -2,7 +2,7 @@
 
 WebAssembly port of Dalek's 
 [Ed25519](https://github.com/dalek-cryptography/ed25519-dalek) and [X25519](https://github.com/dalek-cryptography/x25519-dalek), Rust
-implementations of Ed25519 signatures and X25519.
+implementations of Ed25519 signatures and X25519 key exchange.
 
 ### Install (Node)
 
