@@ -1,8 +1,8 @@
 # Curve25519 for WebAssembly
 
 WebAssembly port of Dalek's 
-[Ed25519](https://github.com/dalek-cryptography/ed25519-dalek), a Rust
-implementation of Ed25519 (EdDSA over Curve25519) signatures and X25519 (ECDH over Curve25519).
+[Ed25519](https://github.com/dalek-cryptography/ed25519-dalek) and [X25519](https://github.com/dalek-cryptography/x25519-dalek), Rust
+implementations of Ed25519 (EdDSA over Curve25519) signatures and X25519 (ECDH over Curve25519).
 
 ### Install (Node)
 
