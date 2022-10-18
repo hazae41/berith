@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = ["hazae41 <hazae41@proton.me>"]
 edition = "2021"
 
-description = "WebAssembly port of Dalek's Ed25519, a Rust implementation of Ed25519 signatures"
+description = "WebAssembly port of Dalek's Ed25519 and X25519, Rust implementations of Ed25519 (EdDSA over Curve25519) signatures and X25519 (ECDH over Curve25519) key exchange"
 repository = "https://github.com/hazae41/ed25519-dalek-wasm"
 license = "Unlicense"
 

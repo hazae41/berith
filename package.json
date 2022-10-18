@@ -4,7 +4,7 @@
   "version": "1.1.19",
   "author": "hazae41",
   "license": "Unlicense",
-  "description": "WebAssembly port of Dalek's Ed25519 and X25519, Rust implementations of Ed25519 (EdDSA over Curve25519) signatures and X25519 (ECDH over Curve25519)",
+  "description": "WebAssembly port of Dalek's Ed25519 and X25519, Rust implementations of Ed25519 signatures and X25519 key exchange",
   "homepage": "https://github.com/hazae41/berith",
   "types": "./dist/types/node/index.d.ts",
   "main": "./dist/cjs/node/index.cjs",
