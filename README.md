@@ -1,8 +1,8 @@
-# Ed25519 for WebAssembly
+# Curve25519 for WebAssembly
 
 WebAssembly port of Dalek's 
 [Ed25519](https://github.com/dalek-cryptography/ed25519-dalek), a Rust
-implementation of Ed25519 signatures.
+implementation of Ed25519 (EdDSA over Curve25519) signatures and X25519 (ECDH over Curve25519).
 
 ### Install (Node)
 
@@ -10,7 +10,7 @@ implementation of Ed25519 signatures.
 npm i @hazae41/berith
 ```
 
-Previous versions are named `ed25519_dalek`
+Previous versions were named `ed25519_dalek`
 
 ```bash
 npm i ed25519_dalek
@@ -71,11 +71,11 @@ node:crypto (unserialized) 7,102 ops/sec ±1.6% (21228 samples)
 node:crypto (serialized) 5,648 ops/sec ±0.52% (16914 samples)
 ```
 
-### Usage
+### Usage for Ed25519 (EdDSA over Curve25519)
 
 ```typescript
 import * as Berith from "@hazae41/berith";
-import { Ed25519Keypair, Ed25519PublicKey, Ed25519Signature } from "@hazae41/berith";
+import { Ed25519Keypair } from "@hazae41/berith";
 
 // Wait for WASM to load
 Berith.initSyncBundledOnce();
@@ -107,6 +107,38 @@ const identity = Ed25519PublicKey.from_bytes(bytes);
 ```typescript
 const bytes = keypair.sign(input).to_bytes();
 const proof = Ed25519Signature.from_bytes(bytes);
+```
+
+### Usage for X25519 (ECDH over Curve25519)
+
+```typescript
+import * as Berith from "@hazae41/berith";
+import { X25519StaticSecret } from "@hazae41/berith";
+
+// Wait for WASM to load
+Berith.initSyncBundledOnce();
+
+// Generate secret x for Alice
+const secretx = new X25519StaticSecret()
+
+// Generate secret y for Bob
+const secrety = new X25519StaticSecret()
+
+// Get public X for Alice to send to Bob
+const publicx = secretx.to_public()
+
+// Get public Y for Bob to send to Alice
+const publicy = secrety.to_public()
+
+// Alice computes the shared key S from x and Y
+const sharedx = secretx.diffie_hellman(publicy)
+
+// Bob computes the shared key S from y and X
+const sharedy = secrety.diffie_hellman(publicx)
+
+// S is the same for Alice and Bob
+console.log("S (Alice)", sharedx.to_bytes())
+console.log("S (Bob", sharedy.to_bytes())
 ```
 
 ### Building
