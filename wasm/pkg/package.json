@@ -8,7 +8,7 @@
   "license": "Unlicense",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hazae41/ed25519-dalek-wasm"
+    "url": "https://github.com/hazae41/berith-wasm"
   },
   "files": [
     "berith_bg.wasm",
