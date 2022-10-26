@@ -1,7 +1,7 @@
 import * as Berith from "../../deno/mod.ts";
 import { Ed25519Keypair, X25519StaticSecret } from "../../deno/mod.ts";
 
-Berith.initSyncBundledOnce()
+await Berith.initBundledOnce()
 
 {
   const keypair = new Ed25519Keypair()
