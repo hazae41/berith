@@ -1,6 +1,3 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
 
 let wasm;
 
@@ -88,7 +85,7 @@ function handleError(f, args) {
 }
 /**
 */
-class Ed25519Keypair {
+export class Ed25519Keypair {
 
     static __wrap(ptr) {
         const obj = Object.create(Ed25519Keypair.prototype);
@@ -171,7 +168,7 @@ class Ed25519Keypair {
 }
 /**
 */
-class Ed25519PublicKey {
+export class Ed25519PublicKey {
 
     static __wrap(ptr) {
         const obj = Object.create(Ed25519PublicKey.prototype);
@@ -263,7 +260,7 @@ class Ed25519PublicKey {
 }
 /**
 */
-class Ed25519Signature {
+export class Ed25519Signature {
 
     static __wrap(ptr) {
         const obj = Object.create(Ed25519Signature.prototype);
@@ -343,7 +340,7 @@ class Ed25519Signature {
 }
 /**
 */
-class X25519PublicKey {
+export class X25519PublicKey {
 
     static __wrap(ptr) {
         const obj = Object.create(X25519PublicKey.prototype);
@@ -423,7 +420,7 @@ class X25519PublicKey {
 }
 /**
 */
-class X25519SharedSecret {
+export class X25519SharedSecret {
 
     static __wrap(ptr) {
         const obj = Object.create(X25519SharedSecret.prototype);
@@ -469,7 +466,7 @@ class X25519SharedSecret {
 }
 /**
 */
-class X25519StaticSecret {
+export class X25519StaticSecret {
 
     static __wrap(ptr) {
         const obj = Object.create(X25519StaticSecret.prototype);
@@ -659,6 +656,10 @@ function getImports() {
     return imports;
 }
 
+function initMemory(imports, maybe_memory) {
+
+}
+
 function finalizeInit(instance, module) {
     wasm = instance.exports;
     init.__wbindgen_wasm_module = module;
@@ -672,6 +673,8 @@ function finalizeInit(instance, module) {
 function initSync(module) {
     const imports = getImports();
 
+    initMemory(imports);
+
     if (!(module instanceof WebAssembly.Module)) {
         module = new WebAssembly.Module(module);
     }
@@ -683,7 +686,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('berith_bg.wasm', (typeof document === 'undefined' ? new (require('u' + 'rl').URL)('file:' + __filename).href : (document.currentScript && document.currentScript.src || new URL('wasm/pkg/berith.cjs', document.baseURI).href)));
+        input = new URL('berith_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
@@ -691,17 +694,12 @@ async function init(input) {
         input = fetch(input);
     }
 
+    initMemory(imports);
+
     const { instance, module } = await load(await input, imports);
 
     return finalizeInit(instance, module);
 }
 
-exports.Ed25519Keypair = Ed25519Keypair;
-exports.Ed25519PublicKey = Ed25519PublicKey;
-exports.Ed25519Signature = Ed25519Signature;
-exports.X25519PublicKey = X25519PublicKey;
-exports.X25519SharedSecret = X25519SharedSecret;
-exports.X25519StaticSecret = X25519StaticSecret;
-exports["default"] = init;
-exports.initSync = initSync;
-//# sourceMappingURL=berith.cjs.map
+export { initSync }
+export default init;

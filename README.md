@@ -4,23 +4,11 @@ WebAssembly port of Dalek's
 [Ed25519](https://github.com/dalek-cryptography/ed25519-dalek) and [X25519](https://github.com/dalek-cryptography/x25519-dalek), Rust
 implementations of Ed25519 signatures and X25519 key exchange.
 
-### Install (Node)
-
 ```bash
 npm i @hazae41/berith
 ```
 
-Previous versions were named `ed25519_dalek`
-
-```bash
-npm i ed25519_dalek
-```
-
-### Test (Deno)
-
-```bash
-deno run --allow-net https://deno.land/x/berith/test/deno/test.ts
-```
+[**CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/dreamy-grothendieck-lislwn)
 
 ### Benchmark (Deno)
 
@@ -74,8 +62,7 @@ node:crypto (serialized) 5,648 ops/sec ±0.52% (16914 samples)
 ### Usage for Ed25519 (EdDSA over Curve25519)
 
 ```typescript
-import * as Berith from "@hazae41/berith";
-import { Ed25519Keypair } from "@hazae41/berith";
+import { Berith, Ed25519Keypair } from "@hazae41/berith";
 
 // Wait for WASM to load
 Berith.initSyncBundledOnce();

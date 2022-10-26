@@ -7,6 +7,8 @@ var berith = require('../wasm/pkg/berith.cjs');
 
 
 
+exports.Berith = index;
+exports.initBundledOnce = index.initBundledOnce;
 exports.initSyncBundledOnce = index.initSyncBundledOnce;
 exports.Ed25519Keypair = berith.Ed25519Keypair;
 exports.Ed25519PublicKey = berith.Ed25519PublicKey;

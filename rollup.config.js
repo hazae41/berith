@@ -15,7 +15,8 @@ export const config = [
       sourcemap: true,
       entryFileNames: "[name].cjs",
     }],
-    plugins: [resolve(), ts({ typescript }), commonjs()]
+    plugins: [resolve(), ts({ typescript }), commonjs()],
+    external: ["tslib"]
   },
   {
     input: "./node/index.ts",
@@ -27,6 +28,7 @@ export const config = [
       entryFileNames: "[name].d.ts",
     }],
     plugins: [dts(), resolve(), ts({ typescript })],
+    external: ["tslib"]
   }
 ]
 

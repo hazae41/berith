@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
 */
-declare class Ed25519Keypair {
+export class Ed25519Keypair {
   free(): void;
 /**
 */
@@ -28,7 +28,7 @@ declare class Ed25519Keypair {
 }
 /**
 */
-declare class Ed25519PublicKey {
+export class Ed25519PublicKey {
   free(): void;
 /**
 * @param {Uint8Array} input
@@ -52,7 +52,7 @@ declare class Ed25519PublicKey {
 }
 /**
 */
-declare class Ed25519Signature {
+export class Ed25519Signature {
   free(): void;
 /**
 * @param {Uint8Array} input
@@ -70,7 +70,7 @@ declare class Ed25519Signature {
 }
 /**
 */
-declare class X25519PublicKey {
+export class X25519PublicKey {
   free(): void;
 /**
 * @param {Uint8Array} input
@@ -88,7 +88,7 @@ declare class X25519PublicKey {
 }
 /**
 */
-declare class X25519SharedSecret {
+export class X25519SharedSecret {
   free(): void;
 /**
 * @returns {Uint8Array}
@@ -101,7 +101,7 @@ declare class X25519SharedSecret {
 }
 /**
 */
-declare class X25519StaticSecret {
+export class X25519StaticSecret {
   free(): void;
 /**
 */
@@ -126,9 +126,9 @@ declare class X25519StaticSecret {
   to_public(): X25519PublicKey;
 }
 
-type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
+export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
-interface InitOutput {
+export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly __wbg_ed25519keypair_free: (a: number) => void;
   readonly ed25519keypair_new: () => number;
@@ -164,7 +164,7 @@ interface InitOutput {
   readonly __wbindgen_exn_store: (a: number) => void;
 }
 
-type SyncInitInput = BufferSource | WebAssembly.Module;
+export type SyncInitInput = BufferSource | WebAssembly.Module;
 /**
 * Instantiates the given `module`, which can either be bytes or
 * a precompiled `WebAssembly.Module`.
@@ -173,7 +173,7 @@ type SyncInitInput = BufferSource | WebAssembly.Module;
 *
 * @returns {InitOutput}
 */
-declare function initSync(module: SyncInitInput): InitOutput;
+export function initSync(module: SyncInitInput): InitOutput;
 
 /**
 * If `module_or_path` is {RequestInfo} or {URL}, makes a request and
@@ -183,6 +183,4 @@ declare function initSync(module: SyncInitInput): InitOutput;
 *
 * @returns {Promise<InitOutput>}
 */
-declare function init (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;
-
-export { Ed25519Keypair, Ed25519PublicKey, Ed25519Signature, InitInput, InitOutput, SyncInitInput, X25519PublicKey, X25519SharedSecret, X25519StaticSecret, init as default, initSync };
+export default function init (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;
