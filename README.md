@@ -8,7 +8,7 @@ implementations of Ed25519 signatures and X25519 key exchange.
 npm i @hazae41/berith
 ```
 
-[**CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/dreamy-grothendieck-lislwn)
+[**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/dreamy-grothendieck-lislwn) • [**Deno CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/practical-bash-820c69)
 
 ### Benchmark (Deno)
 
@@ -99,8 +99,7 @@ const proof = Ed25519Signature.from_bytes(bytes);
 ### Usage for X25519 (ECDH over Curve25519)
 
 ```typescript
-import * as Berith from "@hazae41/berith";
-import { X25519StaticSecret } from "@hazae41/berith";
+import { Berith, X25519StaticSecret } from "@hazae41/berith";
 
 // Wait for WASM to load
 Berith.initSyncBundledOnce();
