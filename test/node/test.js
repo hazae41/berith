@@ -1,5 +1,4 @@
-import * as Berith from "@hazae41/berith";
-import { Ed25519Keypair, X25519StaticSecret } from "@hazae41/berith";
+import { Berith, Ed25519Keypair, X25519StaticSecret } from "@hazae41/berith";
 
 Berith.initSyncBundledOnce()
 
