@@ -11,7 +11,7 @@
   "sideEffects": false,
   "scripts": {
     "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release",
-    "build:dist": "rimraf dist && deno run -A build.ts && rollup -c",
+    "build:dist": "rimraf dist && node build.js && rollup -c",
     "build": "npm run build:wasm && npm run build:dist"
   },
   "peerDependencies": {
