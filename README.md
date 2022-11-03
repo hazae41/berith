@@ -8,7 +8,7 @@ implementations of Ed25519 signatures and X25519 key exchange.
 npm i @hazae41/berith
 ```
 
-[**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/dreamy-grothendieck-lislwn) • [**Deno CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/practical-bash-820c69)• [**Node CodeSandbox 🪣**](https://codesandbox.io/p/sandbox/eager-rgb-tlc15)
+[**Node Package 📦**](https://www.npmjs.com/package/@hazae41/berith) • [**Deno Module 🦖**](https://deno.land/x/berith) • [**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/github/hazae41/berith-example-next)
 
 ### Benchmark (Deno)
 
