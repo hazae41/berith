@@ -1,5 +1,4 @@
-import * as Berith from "../../deno/mod.ts";
-import { Ed25519Keypair, X25519StaticSecret } from "../../deno/mod.ts";
+import { Berith, Ed25519Keypair, X25519StaticSecret } from "../../src/deno/mod.ts";
 
 await Berith.initBundledOnce()
 

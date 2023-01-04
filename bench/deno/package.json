@@ -1,5 +1,0 @@
-{
-  "scripts": {
-    "bench": "deno bench --unstable --import-map=imports.json bench.ts"
-  }
-}

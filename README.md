@@ -16,7 +16,7 @@ About 6x to 8x faster than
 [@noble/ed25519](https://github.com/paulmillr/noble-ed25519)
 
 ```bash
-git clone https://github.com/hazae41/berith && cd berith/bench/deno && npm run bench
+git clone https://github.com/hazae41/berith && cd berith && npm run bench:deno
 ```
 
 ```
@@ -47,7 +47,7 @@ Not as fast as [supercop.wasm](https://github.com/nazar-pc/supercop.wasm)
 implementation of Ed25519)
 
 ```bash
-git clone https://github.com/hazae41/berith && cd berith/bench/node && npm i && npm run bench
+git clone https://github.com/hazae41/berith && cd berith && npm run bench:node
 ```
 
 ```

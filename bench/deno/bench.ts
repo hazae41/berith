@@ -1,8 +1,7 @@
-import * as Berith from "https://deno.land/x/berith@1.1.18/deno/mod.ts";
-import { Ed25519Keypair, Ed25519PublicKey } from "https://deno.land/x/berith@1.1.18/deno/mod.ts";
 import * as noble from "https://deno.land/x/ed25519@1.7.1/mod.ts";
+import { Berith, Ed25519Keypair, Ed25519PublicKey } from "../../src/deno/mod.ts";
 
-Berith.initSyncBundledOnce()
+await Berith.initBundledOnce()
 
 Deno.bench("@hazae41/berith 1.1.18 (unserialized)", { group: "unserialized", baseline: true }, () => {
   const keypair = new Ed25519Keypair()
