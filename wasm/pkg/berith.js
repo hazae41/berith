@@ -686,7 +686,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('berith_bg.wasm', import.meta.url);
+        throw new Error();
     }
     const imports = getImports();
 
@@ -701,5 +701,5 @@ async function init(input) {
     return finalizeInit(instance, module);
 }
 
-export { initSync }
+export { init, initSync }
 export default init;

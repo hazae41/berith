@@ -2,8 +2,10 @@ export * from "../../../wasm/pkg/berith.js";
 
 import * as Base64 from "https://deno.land/std@0.158.0/encoding/base64.ts";
 
+// @deno-types="../../../wasm/pkg/berith.d.ts"
+import { init, initSync } from "../../../wasm/pkg/berith.js";
+
 import { InitOutput } from "../../../wasm/pkg/berith.d.ts";
-import init, { initSync } from "../../../wasm/pkg/berith.js";
 import { wasm } from "../../../wasm/pkg/berith.wasm.js";
 
 let output: InitOutput | undefined = undefined

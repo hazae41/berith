@@ -1,9 +1,6 @@
-import commonjs from "@rollup/plugin-commonjs";
-import resolve from "@rollup/plugin-node-resolve";
 import ts from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import externals from "rollup-plugin-node-externals";
-import typescript from "ttypescript";
 
 export const config = [
   {
@@ -16,7 +13,7 @@ export const config = [
       sourcemap: true,
       entryFileNames: "[name].cjs",
     }],
-    plugins: [resolve(), externals(), ts({ typescript }), commonjs()]
+    plugins: [externals(), ts()]
   },
   {
     input: "./src/node/index.ts",
@@ -25,9 +22,10 @@ export const config = [
       format: "esm",
       exports: "named",
       preserveModules: true,
+      sourcemap: false,
       entryFileNames: "[name].d.ts",
     }],
-    plugins: [dts(), resolve(), externals(), ts({ typescript })]
+    plugins: [externals(), ts(), dts()]
   },
   {
     input: "./src/node/index.test.ts",
@@ -37,10 +35,10 @@ export const config = [
       exports: "named",
       preserveModules: true,
       sourcemap: true,
-      entryFileNames: "[name].cjs",
+      entryFileNames: "[name].cjs"
     }],
-    plugins: [resolve(), externals(), ts({ typescript }), commonjs()]
-  }
+    plugins: [externals({ devDeps: true }), ts()],
+  },
 ]
 
 export default config
