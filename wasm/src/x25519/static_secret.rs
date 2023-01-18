@@ -4,8 +4,6 @@ use alloc::{boxed::Box, vec::Vec};
 
 use wasm_bindgen::prelude::*;
 
-use rand::rngs::OsRng;
-
 use crate::x25519::public_key::X25519PublicKey;
 use crate::x25519::shared_secret::X25519SharedSecret;
 
@@ -18,7 +16,7 @@ pub struct X25519StaticSecret {
 impl X25519StaticSecret {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
-        let secret = x25519_dalek::StaticSecret::new(&mut OsRng {});
+        let secret = x25519_dalek::StaticSecret::new(&mut rand::rngs::OsRng {});
         let inner = Box::new(secret);
 
         Self { inner }

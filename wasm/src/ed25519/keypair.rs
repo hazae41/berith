@@ -4,8 +4,6 @@ use alloc::{boxed::Box, vec::Vec};
 
 use wasm_bindgen::prelude::*;
 
-use rand::rngs::OsRng;
-
 use crate::ed25519::public_key::Ed25519PublicKey;
 use crate::ed25519::signature::Ed25519Signature;
 
@@ -18,7 +16,7 @@ pub struct Ed25519Keypair {
 impl Ed25519Keypair {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
-        let keypair = ed25519_dalek::Keypair::generate(&mut OsRng {});
+        let keypair = ed25519_dalek::Keypair::generate(&mut rand::rngs::OsRng {});
         let inner = Box::new(keypair);
 
         Self { inner }
