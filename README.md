@@ -1,4 +1,9 @@
-# Ed25519 and X25519 for WebAssembly
+<div>
+  <img align="right" width="128" src="https://user-images.githubusercontent.com/4405263/216624164-ee65f3ea-0857-40ad-8423-fff8014202c1.png"/>
+  <p></p>
+</div>
+
+# Berith
 
 WebAssembly port of Dalek's 
 [Ed25519](https://github.com/dalek-cryptography/ed25519-dalek) and [X25519](https://github.com/dalek-cryptography/x25519-dalek), Rust
