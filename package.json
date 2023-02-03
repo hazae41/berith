@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@hazae41/berith",
-  "version": "1.1.37",
+  "version": "1.1.38",
   "description": "WebAssembly port of Dalek's Ed25519 and X25519, Rust implementations of Ed25519 signatures and X25519 key exchange",
   "homepage": "https://github.com/hazae41/berith",
   "repository": "github:hazae41/berith",
@@ -17,8 +17,8 @@
     "./dist/types"
   ],
   "scripts": {
-    "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release",
-    "build:dist": "rimraf dist && node build.js && rollup -c",
+    "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release && node patch.js",
+    "build:dist": "rimraf dist && rollup -c",
     "build": "npm run build:wasm && npm run build:dist",
     "test:node": "node ./dist/test/src/node/index.test.cjs",
     "test:deno": "deno run -A --unstable ./src/deno/mod.test.ts",
