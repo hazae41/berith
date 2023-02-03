@@ -20,7 +20,7 @@ npm i @hazae41/berith
 ### Deno
 
 ```bash
-git clone https://github.com/hazae41/berith && cd berith && npm run bench:deno
+git clone https://github.com/hazae41/berith && cd berith && npm i && npm run bench:deno
 ```
 
 ```
@@ -43,7 +43,7 @@ summary
 ### Node
 
 ```bash
-git clone https://github.com/hazae41/berith && cd berith && npm run bench:node
+git clone https://github.com/hazae41/berith && cd berith && npm i && npm run bench:node
 ```
 
 ```
