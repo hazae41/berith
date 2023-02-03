@@ -39,6 +39,18 @@ export const config = [
     }],
     plugins: [externals({ devDeps: true }), ts()],
   },
+  {
+    input: "./src/node/index.bench.ts",
+    output: [{
+      dir: "./dist/bench",
+      format: "cjs",
+      exports: "named",
+      preserveModules: true,
+      sourcemap: true,
+      entryFileNames: "[name].cjs"
+    }],
+    plugins: [externals({ devDeps: true }), ts()],
+  },
 ]
 
 export default config

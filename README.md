@@ -15,10 +15,9 @@ npm i @hazae41/berith
 
 [**Node Package 📦**](https://www.npmjs.com/package/@hazae41/berith) • [**Deno Module 🦖**](https://deno.land/x/berith) • [**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/github/hazae41/berith-example-next)
 
-### Benchmark (Deno)
+## Benchmark
 
-About 6x to 8x faster than
-[@noble/ed25519](https://github.com/paulmillr/noble-ed25519)
+### Deno
 
 ```bash
 git clone https://github.com/hazae41/berith && cd berith && npm run bench:deno
@@ -26,45 +25,53 @@ git clone https://github.com/hazae41/berith && cd berith && npm run bench:deno
 
 ```
 cpu: Apple M1 Max
-runtime: deno 1.26.0 (aarch64-apple-darwin)
+runtime: deno 1.30.0 (aarch64-apple-darwin)
 
-benchmark                                time (avg)             (min … max)       p75       p99      p995
---------------------------------------------------------------------------- -----------------------------
-@hazae41/berith 1.1.11 (unserialized)  289.94 µs/iter (281.71 µs … 370.79 µs) 290.75 µs  311.5 µs 320.08 µs
-@noble/ed25519 1.7.1                    2.1 ms/iter     (1.95 ms … 2.77 ms)   2.14 ms    2.3 ms   2.39 ms
-
-summary
-  @hazae41/berith 1.1.11 (unserialized)
-   7.25x faster than @noble/ed25519 1.7.1
-
-@hazae41/berith 1.1.11 (serialized)    332.09 µs/iter    (323.17 µs … 474 µs) 332.38 µs 361.46 µs 368.25 µs
-@noble/ed25519 1.7.1                   2.07 ms/iter     (1.95 ms … 2.32 ms)   2.12 ms   2.26 ms   2.26 ms
+file:///src/deno/bench/mod.bench.ts
+benchmark                           time (avg)             (min … max)       p75       p99      p995
+---------------------------------------------------------------------- -----------------------------
+@hazae41/berith (unserialized)   313.7 µs/iter (305.79 µs … 493.42 µs) 314.12 µs 337.92 µs 345.25 µs
+@hazae41/berith (serialized)    357.31 µs/iter (347.12 µs … 803.42 µs) 358.04 µs  385.5 µs 390.46 µs
+@noble/ed25519 1.7.1              1.85 ms/iter     (1.65 ms … 2.27 ms)   1.89 ms   2.07 ms   2.08 ms
 
 summary
-  @hazae41/berith 1.1.11 (serialized)
-   6.23x faster than @noble/ed25519 1.7.1
+  @hazae41/berith (unserialized)
+   1.14x faster than @hazae41/berith (serialized)
+   5.9x faster than @noble/ed25519 1.7.1
 ```
 
-### Benchmark (Node)
-
-Not as fast as [supercop.wasm](https://github.com/nazar-pc/supercop.wasm)
-(Emscripten port of [@orlp/ed25519](https://github.com/orlp/ed25519), a C
-implementation of Ed25519)
+### Node
 
 ```bash
 git clone https://github.com/hazae41/berith && cd berith && npm run bench:node
 ```
 
 ```
-@hazae41/berith 1.1.12 (unserialized) 4,072 ops/sec ±0.06% (12215 samples)
-@hazae41/berith 1.1.12 (serialized) 3,544 ops/sec ±0.09% (10638 samples)
-@noble/ed25519 1.7.1 485 ops/sec ±0.23% (1447 samples)
-supercop.wasm 5.0.1 5,902 ops/sec ±0.2% (17698 samples)
-node:crypto (unserialized) 7,102 ops/sec ±1.6% (21228 samples)
-node:crypto (serialized) 5,648 ops/sec ±0.52% (16914 samples)
+cpu: Apple M1 Max
+runtime: node v18.12.1 (aarch64-apple-darwin)
+
+┌────────────────────────────────┬──────────────────┬─────────────┬─────────────┐
+│            (index)             │     average      │   minimum   │   maximum   │
+├────────────────────────────────┼──────────────────┼─────────────┼─────────────┤
+│ @hazae41/berith (unserialized) │ '270.19 μs/iter' │ '262.00 μs' │ '731.42 μs' │
+│  @hazae41/berith (serialized)  │ '306.35 μs/iter' │ '297.67 μs' │ '611.46 μs' │
+│      @noble/ed25519 1.7.1      │  '1.89 ms/iter'  │  '1.70 ms'  │ '31.04 ms'  │
+│      supercop.wasm 5.0.1       │ '173.95 μs/iter' │ '166.25 μs' │ '989.75 μs' │
+│   node:crypto (unserialized)   │ '151.05 μs/iter' │ '142.42 μs' │  '5.73 ms'  │
+│    node:crypto (serialized)    │ '557.00 μs/iter' │ '545.04 μs' │  '7.72 ms'  │
+└────────────────────────────────┴──────────────────┴─────────────┴─────────────┘
+
+Summary
+- @hazae41/berith (unserialized) is 1.13x faster than @hazae41/berith (serialized)
+- @hazae41/berith (unserialized) is 7.01x faster than @noble/ed25519 1.7.1
+- @hazae41/berith (unserialized) is 0.64x faster than supercop.wasm 5.0.1
+- @hazae41/berith (unserialized) is 0.56x faster than node:crypto (unserialized)
+- @hazae41/berith (unserialized) is 2.06x faster than node:crypto (serialized)
 ```
 
-### Usage for Ed25519 (EdDSA over Curve25519)
+## Usage
+
+### Ed25519 (EdDSA over Curve25519)
 
 ```typescript
 import { Berith, Ed25519Keypair } from "@hazae41/berith";
@@ -101,7 +108,7 @@ const bytes = keypair.sign(input).to_bytes();
 const proof = Ed25519Signature.from_bytes(bytes);
 ```
 
-### Usage for X25519 (ECDH over Curve25519)
+### X25519 (ECDH over Curve25519)
 
 ```typescript
 import { Berith, X25519StaticSecret } from "@hazae41/berith";
@@ -131,6 +138,8 @@ const sharedy = secrety.diffie_hellman(publicx)
 console.log("S (Alice)", sharedx.to_bytes())
 console.log("S (Bob", sharedy.to_bytes())
 ```
+
+## Building
 
 ### Unreproducible building
 
