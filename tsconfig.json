@@ -23,7 +23,6 @@
     }
   },
   "include": [
-    "./src/node/index.ts",
-    "./src/node/index.test.ts"
+    "./src/node/**/**.ts",
   ],
 }

@@ -25,15 +25,14 @@
     "test": "npm run test:node && npm run test:deno",
     "example:deno": "deno run ./example/deno/mod.ts",
     "example:node": "cd ./example/node && npm ci && node ./index.js",
-    "bench:deno": "cd ./src/deno/bench && deno bench --unstable --import-map=imports.json mod.bench.ts",
+    "bench:deno": "cd ./src/deno/bench && deno bench --unstable mod.bench.ts",
     "bench:node": "node ./dist/bench/src/node/index.bench.cjs",
     "prepare": "npm run build:dist"
   },
   "devDependencies": {
     "@hazae41/deimos": "^1.0.5",
     "@hazae41/phobos": "^1.0.10",
-    "@noble/ed25519": "^1.7.1",
-    "@noble/hashes": "^1.2.0",
+    "@noble/curves": "^0.7.1",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/node": "^18.11.18",
     "rimraf": "^4.1.1",

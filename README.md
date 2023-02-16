@@ -25,19 +25,19 @@ git clone https://github.com/hazae41/berith && cd berith && npm i && npm run ben
 
 ```
 cpu: Apple M1 Max
-runtime: deno 1.30.0 (aarch64-apple-darwin)
+runtime: deno 1.30.3 (aarch64-apple-darwin)
 
 file:///src/deno/bench/mod.bench.ts
 benchmark                           time (avg)             (min … max)       p75       p99      p995
 ---------------------------------------------------------------------- -----------------------------
-@hazae41/berith (unserialized)   313.7 µs/iter (305.79 µs … 493.42 µs) 314.12 µs 337.92 µs 345.25 µs
-@hazae41/berith (serialized)    357.31 µs/iter (347.12 µs … 803.42 µs) 358.04 µs  385.5 µs 390.46 µs
-@noble/ed25519 1.7.1              1.85 ms/iter     (1.65 ms … 2.27 ms)   1.89 ms   2.07 ms   2.08 ms
+@hazae41/berith (unserialized)  325.78 µs/iter (316.04 µs … 491.04 µs) 326.21 µs 348.62 µs 364.54 µs
+@hazae41/berith (serialized)     368.3 µs/iter (359.12 µs … 537.71 µs) 368.79 µs 399.92 µs 406.54 µs
+@noble/curves 0.7.0                1.9 ms/iter      (1.73 ms … 2.3 ms)   1.96 ms   2.26 ms   2.28 ms
 
 summary
   @hazae41/berith (unserialized)
-   1.14x faster than @hazae41/berith (serialized)
-   5.9x faster than @noble/ed25519 1.7.1
+   1.13x faster than @hazae41/berith (serialized)
+   5.85x faster than @noble/curves 0.7.0
 ```
 
 ### Node
@@ -53,20 +53,20 @@ runtime: node v18.12.1 (aarch64-apple-darwin)
 ┌────────────────────────────────┬──────────────────┬─────────────┬─────────────┐
 │            (index)             │     average      │   minimum   │   maximum   │
 ├────────────────────────────────┼──────────────────┼─────────────┼─────────────┤
-│ @hazae41/berith (unserialized) │ '270.19 μs/iter' │ '262.00 μs' │ '731.42 μs' │
-│  @hazae41/berith (serialized)  │ '306.35 μs/iter' │ '297.67 μs' │ '611.46 μs' │
-│      @noble/ed25519 1.7.1      │  '1.89 ms/iter'  │  '1.70 ms'  │ '31.04 ms'  │
-│      supercop.wasm 5.0.1       │ '173.95 μs/iter' │ '166.25 μs' │ '989.75 μs' │
-│   node:crypto (unserialized)   │ '151.05 μs/iter' │ '142.42 μs' │  '5.73 ms'  │
-│    node:crypto (serialized)    │ '557.00 μs/iter' │ '545.04 μs' │  '7.72 ms'  │
+│ @hazae41/berith (unserialized) │ '281.68 μs/iter' │ '273.83 μs' │ '875.92 μs' │
+│  @hazae41/berith (serialized)  │ '318.67 μs/iter' │ '311.29 μs' │ '938.87 μs' │
+│      @noble/curves 0.7.0       │  '1.99 ms/iter'  │  '1.82 ms'  │  '5.91 ms'  │
+│      supercop.wasm 5.0.1       │ '187.96 μs/iter' │ '179.21 μs' │ '734.29 μs' │
+│   node:crypto (unserialized)   │ '152.67 μs/iter' │ '144.96 μs' │  '2.86 ms'  │
+│    node:crypto (serialized)    │ '555.61 μs/iter' │ '549.42 μs' │  '1.20 ms'  │
 └────────────────────────────────┴──────────────────┴─────────────┴─────────────┘
 
 Summary
 - @hazae41/berith (unserialized) is 1.13x faster than @hazae41/berith (serialized)
-- @hazae41/berith (unserialized) is 7.01x faster than @noble/ed25519 1.7.1
-- @hazae41/berith (unserialized) is 0.64x faster than supercop.wasm 5.0.1
-- @hazae41/berith (unserialized) is 0.56x faster than node:crypto (unserialized)
-- @hazae41/berith (unserialized) is 2.06x faster than node:crypto (serialized)
+- @hazae41/berith (unserialized) is 7.06x faster than @noble/curves 0.7.0
+- @hazae41/berith (unserialized) is 0.67x faster than supercop.wasm 5.0.1
+- @hazae41/berith (unserialized) is 0.54x faster than node:crypto (unserialized)
+- @hazae41/berith (unserialized) is 1.97x faster than node:crypto (serialized)
 ```
 
 ## Usage
