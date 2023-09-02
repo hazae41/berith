@@ -13,10 +13,11 @@
   "files": [
     "berith_bg.wasm",
     "berith.js",
-    "berith.d.ts",
-    "LICENSE.md"
+    "berith.d.ts"
   ],
   "module": "berith.js",
   "types": "berith.d.ts",
-  "sideEffects": false
+  "sideEffects": [
+    "./snippets/*"
+  ]
 }

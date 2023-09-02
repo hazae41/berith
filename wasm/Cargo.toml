@@ -14,10 +14,10 @@ crate-type = ["cdylib"]
 [profile.release]
 lto = true
 debug = false
-opt-level = "z"
+opt-level = 3
 
 [dependencies]
-wasm-bindgen = { version = "0.2.83", default-features = false }
+wasm-bindgen = { version = "0.2.87", default-features = false }
 ed25519-dalek = { version = "1.0.1", default-features = false, features = ["rand", "u64_backend"] }
 x25519-dalek = { version = "1.2.0", default-features = false, features = ["u64_backend"] }
 rand = { version = "0.7.3", default-features = false, features = ["wasm-bindgen", "getrandom"] }

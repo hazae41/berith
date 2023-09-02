@@ -1,6 +1,6 @@
 import { Buffer } from "https://deno.land/std@0.170.0/node/buffer.ts";
 import { assert, test } from "npm:@hazae41/phobos";
-import { Ed25519Keypair, Ed25519PublicKey, Ed25519Signature, initBundledOnce, X25519PublicKey, X25519StaticSecret } from "./mod.ts";
+import { Ed25519Keypair, Ed25519PublicKey, Ed25519Signature, X25519PublicKey, X25519StaticSecret, initBundledOnce } from "./mod.ts";
 
 function equals(a: Uint8Array, b: Uint8Array) {
   const ba = Buffer.from(a.buffer)
@@ -10,22 +10,22 @@ function equals(a: Uint8Array, b: Uint8Array) {
 }
 
 function assertEd25519Keypair(keypair: Ed25519Keypair) {
-  const bytes = keypair.to_bytes()
-  const bytes2 = Ed25519Keypair.from_bytes(bytes).to_bytes()
+  const bytes = keypair.to_bytes().copy()
+  const bytes2 = Ed25519Keypair.from_bytes(bytes).to_bytes().copy()
 
   assert(equals(bytes, bytes2), `keypair.to_bytes serialization`)
 }
 
 function assertEd25519PublicKey(identity: Ed25519PublicKey) {
-  const bytes = identity.to_bytes()
-  const bytes2 = Ed25519PublicKey.from_bytes(bytes).to_bytes()
+  const bytes = identity.to_bytes().copy()
+  const bytes2 = Ed25519PublicKey.from_bytes(bytes).to_bytes().copy()
 
   assert(equals(bytes, bytes2), `identity.to_bytes serialization`)
 }
 
 function assertEd25519Signature(signature: Ed25519Signature) {
-  const bytes = signature.to_bytes()
-  const bytes2 = Ed25519Signature.from_bytes(bytes).to_bytes()
+  const bytes = signature.to_bytes().copy()
+  const bytes2 = Ed25519Signature.from_bytes(bytes).to_bytes().copy()
 
   assert(equals(bytes, bytes2), `signature.to_bytes serialization`)
 }
@@ -49,15 +49,15 @@ test("Ed25519", async () => {
 })
 
 function assertX25519StaticSecret(secret: X25519StaticSecret) {
-  const bytes = secret.to_bytes()
-  const bytes2 = X25519StaticSecret.from_bytes(bytes).to_bytes()
+  const bytes = secret.to_bytes().copy()
+  const bytes2 = X25519StaticSecret.from_bytes(bytes).to_bytes().copy()
 
   assert(equals(bytes, bytes2), `secret.to_bytes serialization`)
 }
 
 function assertX25519PublicKey(publick: X25519PublicKey) {
-  const bytes = publick.to_bytes()
-  const bytes2 = X25519PublicKey.from_bytes(bytes).to_bytes()
+  const bytes = publick.to_bytes().copy()
+  const bytes2 = X25519PublicKey.from_bytes(bytes).to_bytes().copy()
 
   assert(equals(bytes, bytes2), `publick.to_bytes serialization`)
 }
@@ -80,5 +80,5 @@ test("X25519", async () => {
   const sharedx = secretx.diffie_hellman(publicy)
   const sharedy = secrety.diffie_hellman(publicx)
 
-  assert(equals(sharedx.to_bytes(), sharedy.to_bytes()), `secrets should be equal`)
+  assert(equals(sharedx.to_bytes().copy(), sharedy.to_bytes().copy()), `secrets should be equal`)
 })

@@ -5,15 +5,22 @@
 
 # Berith
 
-WebAssembly port of Dalek's 
-[Ed25519](https://github.com/dalek-cryptography/ed25519-dalek) and [X25519](https://github.com/dalek-cryptography/x25519-dalek), Rust
-implementations of Ed25519 signatures and X25519 key exchange.
+WebAssembly port of Ed25519 signatures and X25519 key exchange
 
 ```bash
 npm i @hazae41/berith
 ```
 
 [**Node Package 📦**](https://www.npmjs.com/package/@hazae41/berith) • [**Deno Module 🦖**](https://deno.land/x/berith) • [**Next.js CodeSandbox 🪣**](https://codesandbox.io/p/github/hazae41/berith-example-next)
+
+## Algorithms
+- Ed25519 from Dalek (ed25519-dalek)
+- X25519 from Dalek (ed25519-dalek)
+
+## Features
+- Reproducible building
+- Pre-bundled and streamed
+- Zero-copy memory slices
 
 ## Benchmark
 
@@ -94,17 +101,17 @@ const verified = identity.verify(bytes, proof); // boolean
 You can serialize and deserialize to Uint8Array
 
 ```typescript
-const bytes = new Ed25519Keypair().to_bytes();
+const bytes = new Ed25519Keypair().to_bytes().copy();
 const keypair = Ed25519Keypair.from_bytes(bytes);
 ```
 
 ```typescript
-const bytes = keypair.public().to_bytes();
+const bytes = keypair.public().to_bytes().copy();
 const identity = Ed25519PublicKey.from_bytes(bytes);
 ```
 
 ```typescript
-const bytes = keypair.sign(input).to_bytes();
+const bytes = keypair.sign(input).to_bytes().copy();
 const proof = Ed25519Signature.from_bytes(bytes);
 ```
 
@@ -135,8 +142,8 @@ const sharedx = secretx.diffie_hellman(publicy)
 const sharedy = secrety.diffie_hellman(publicx)
 
 // S is the same for Alice and Bob
-console.log("S (Alice)", sharedx.to_bytes())
-console.log("S (Bob", sharedy.to_bytes())
+console.log("S (Alice)", sharedx.to_bytes().copy())
+console.log("S (Bob", sharedy.to_bytes().copy())
 ```
 
 ## Building

@@ -1,24 +1,24 @@
-
 let wasm;
 
-const cachedTextDecoder = new TextDecoder('utf-8', { ignoreBOM: true, fatal: true });
+const cachedTextDecoder = (typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8', { ignoreBOM: true, fatal: true }) : { decode: () => { throw Error('TextDecoder not available') } } );
 
-cachedTextDecoder.decode();
+if (typeof TextDecoder !== 'undefined') { cachedTextDecoder.decode(); };
 
-let cachedUint8Memory0 = new Uint8Array();
+let cachedUint8Memory0 = null;
 
 function getUint8Memory0() {
-    if (cachedUint8Memory0.byteLength === 0) {
+    if (cachedUint8Memory0 === null || cachedUint8Memory0.byteLength === 0) {
         cachedUint8Memory0 = new Uint8Array(wasm.memory.buffer);
     }
     return cachedUint8Memory0;
 }
 
 function getStringFromWasm0(ptr, len) {
+    ptr = ptr >>> 0;
     return cachedTextDecoder.decode(getUint8Memory0().subarray(ptr, ptr + len));
 }
 
-const heap = new Array(32).fill(undefined);
+const heap = new Array(128).fill(undefined);
 
 heap.push(undefined, null, true, false);
 
@@ -36,7 +36,7 @@ function addHeapObject(obj) {
 function getObject(idx) { return heap[idx]; }
 
 function dropObject(idx) {
-    if (idx < 36) return;
+    if (idx < 132) return;
     heap[idx] = heap_next;
     heap_next = idx;
 }
@@ -50,22 +50,23 @@ function takeObject(idx) {
 let WASM_VECTOR_LEN = 0;
 
 function passArray8ToWasm0(arg, malloc) {
-    const ptr = malloc(arg.length * 1);
+    const ptr = malloc(arg.length * 1, 1) >>> 0;
     getUint8Memory0().set(arg, ptr / 1);
     WASM_VECTOR_LEN = arg.length;
     return ptr;
 }
 
-let cachedInt32Memory0 = new Int32Array();
+let cachedInt32Memory0 = null;
 
 function getInt32Memory0() {
-    if (cachedInt32Memory0.byteLength === 0) {
+    if (cachedInt32Memory0 === null || cachedInt32Memory0.byteLength === 0) {
         cachedInt32Memory0 = new Int32Array(wasm.memory.buffer);
     }
     return cachedInt32Memory0;
 }
 
 function getArrayU8FromWasm0(ptr, len) {
+    ptr = ptr >>> 0;
     return getUint8Memory0().subarray(ptr / 1, ptr / 1 + len);
 }
 
@@ -88,15 +89,16 @@ function handleError(f, args) {
 export class Ed25519Keypair {
 
     static __wrap(ptr) {
+        ptr = ptr >>> 0;
         const obj = Object.create(Ed25519Keypair.prototype);
-        obj.ptr = ptr;
+        obj.__wbg_ptr = ptr;
 
         return obj;
     }
 
     __destroy_into_raw() {
-        const ptr = this.ptr;
-        this.ptr = 0;
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
 
         return ptr;
     }
@@ -133,17 +135,17 @@ export class Ed25519Keypair {
         }
     }
     /**
-    * @returns {Uint8Array}
+    * @returns {Slice}
     */
     to_bytes() {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            wasm.ed25519keypair_to_bytes(retptr, this.ptr);
+            wasm.ed25519keypair_to_bytes(retptr, this.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
-            var v0 = getArrayU8FromWasm0(r0, r1).slice();
-            wasm.__wbindgen_free(r0, r1 * 1);
-            return v0;
+            var v1 = new Slice(r0, r1);
+            ;
+            return v1;
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
@@ -152,7 +154,7 @@ export class Ed25519Keypair {
     * @returns {Ed25519PublicKey}
     */
     public() {
-        const ret = wasm.ed25519keypair_public(this.ptr);
+        const ret = wasm.ed25519keypair_public(this.__wbg_ptr);
         return Ed25519PublicKey.__wrap(ret);
     }
     /**
@@ -162,7 +164,7 @@ export class Ed25519Keypair {
     sign(input) {
         const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.ed25519keypair_sign(this.ptr, ptr0, len0);
+        const ret = wasm.ed25519keypair_sign(this.__wbg_ptr, ptr0, len0);
         return Ed25519Signature.__wrap(ret);
     }
 }
@@ -171,15 +173,16 @@ export class Ed25519Keypair {
 export class Ed25519PublicKey {
 
     static __wrap(ptr) {
+        ptr = ptr >>> 0;
         const obj = Object.create(Ed25519PublicKey.prototype);
-        obj.ptr = ptr;
+        obj.__wbg_ptr = ptr;
 
         return obj;
     }
 
     __destroy_into_raw() {
-        const ptr = this.ptr;
-        this.ptr = 0;
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
 
         return ptr;
     }
@@ -196,7 +199,7 @@ export class Ed25519PublicKey {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
             const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
-            wasm.ed25519publickey_new(retptr, ptr0, len0);
+            wasm.ed25519publickey_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
             var r2 = getInt32Memory0()[retptr / 4 + 2];
@@ -230,17 +233,17 @@ export class Ed25519PublicKey {
         }
     }
     /**
-    * @returns {Uint8Array}
+    * @returns {Slice}
     */
     to_bytes() {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            wasm.ed25519publickey_to_bytes(retptr, this.ptr);
+            wasm.ed25519publickey_to_bytes(retptr, this.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
-            var v0 = getArrayU8FromWasm0(r0, r1).slice();
-            wasm.__wbindgen_free(r0, r1 * 1);
-            return v0;
+            var v1 = new Slice(r0, r1);
+            ;
+            return v1;
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
@@ -254,7 +257,7 @@ export class Ed25519PublicKey {
         const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
         _assertClass(signature, Ed25519Signature);
-        const ret = wasm.ed25519publickey_verify(this.ptr, ptr0, len0, signature.ptr);
+        const ret = wasm.ed25519publickey_verify(this.__wbg_ptr, ptr0, len0, signature.__wbg_ptr);
         return ret !== 0;
     }
 }
@@ -263,15 +266,16 @@ export class Ed25519PublicKey {
 export class Ed25519Signature {
 
     static __wrap(ptr) {
+        ptr = ptr >>> 0;
         const obj = Object.create(Ed25519Signature.prototype);
-        obj.ptr = ptr;
+        obj.__wbg_ptr = ptr;
 
         return obj;
     }
 
     __destroy_into_raw() {
-        const ptr = this.ptr;
-        this.ptr = 0;
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
 
         return ptr;
     }
@@ -288,7 +292,7 @@ export class Ed25519Signature {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
             const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
-            wasm.ed25519signature_new(retptr, ptr0, len0);
+            wasm.ed25519signature_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
             var r2 = getInt32Memory0()[retptr / 4 + 2];
@@ -322,17 +326,17 @@ export class Ed25519Signature {
         }
     }
     /**
-    * @returns {Uint8Array}
+    * @returns {Slice}
     */
     to_bytes() {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            wasm.ed25519signature_to_bytes(retptr, this.ptr);
+            wasm.ed25519signature_to_bytes(retptr, this.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
-            var v0 = getArrayU8FromWasm0(r0, r1).slice();
-            wasm.__wbindgen_free(r0, r1 * 1);
-            return v0;
+            var v1 = new Slice(r0, r1);
+            ;
+            return v1;
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
@@ -343,15 +347,16 @@ export class Ed25519Signature {
 export class X25519PublicKey {
 
     static __wrap(ptr) {
+        ptr = ptr >>> 0;
         const obj = Object.create(X25519PublicKey.prototype);
-        obj.ptr = ptr;
+        obj.__wbg_ptr = ptr;
 
         return obj;
     }
 
     __destroy_into_raw() {
-        const ptr = this.ptr;
-        this.ptr = 0;
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
 
         return ptr;
     }
@@ -402,17 +407,17 @@ export class X25519PublicKey {
         }
     }
     /**
-    * @returns {Uint8Array}
+    * @returns {Slice}
     */
     to_bytes() {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            wasm.x25519publickey_to_bytes(retptr, this.ptr);
+            wasm.x25519publickey_to_bytes(retptr, this.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
-            var v0 = getArrayU8FromWasm0(r0, r1).slice();
-            wasm.__wbindgen_free(r0, r1 * 1);
-            return v0;
+            var v1 = new Slice(r0, r1);
+            ;
+            return v1;
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
@@ -423,15 +428,16 @@ export class X25519PublicKey {
 export class X25519SharedSecret {
 
     static __wrap(ptr) {
+        ptr = ptr >>> 0;
         const obj = Object.create(X25519SharedSecret.prototype);
-        obj.ptr = ptr;
+        obj.__wbg_ptr = ptr;
 
         return obj;
     }
 
     __destroy_into_raw() {
-        const ptr = this.ptr;
-        this.ptr = 0;
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
 
         return ptr;
     }
@@ -441,17 +447,17 @@ export class X25519SharedSecret {
         wasm.__wbg_x25519sharedsecret_free(ptr);
     }
     /**
-    * @returns {Uint8Array}
+    * @returns {Slice}
     */
     to_bytes() {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            wasm.x25519sharedsecret_to_bytes(retptr, this.ptr);
+            wasm.x25519publickey_to_bytes(retptr, this.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
-            var v0 = getArrayU8FromWasm0(r0, r1).slice();
-            wasm.__wbindgen_free(r0, r1 * 1);
-            return v0;
+            var v1 = new Slice(r0, r1);
+            ;
+            return v1;
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
@@ -460,7 +466,7 @@ export class X25519SharedSecret {
     * @returns {boolean}
     */
     was_contributory() {
-        const ret = wasm.x25519sharedsecret_was_contributory(this.ptr);
+        const ret = wasm.x25519sharedsecret_was_contributory(this.__wbg_ptr);
         return ret !== 0;
     }
 }
@@ -469,15 +475,16 @@ export class X25519SharedSecret {
 export class X25519StaticSecret {
 
     static __wrap(ptr) {
+        ptr = ptr >>> 0;
         const obj = Object.create(X25519StaticSecret.prototype);
-        obj.ptr = ptr;
+        obj.__wbg_ptr = ptr;
 
         return obj;
     }
 
     __destroy_into_raw() {
-        const ptr = this.ptr;
-        this.ptr = 0;
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
 
         return ptr;
     }
@@ -514,17 +521,17 @@ export class X25519StaticSecret {
         }
     }
     /**
-    * @returns {Uint8Array}
+    * @returns {Slice}
     */
     to_bytes() {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            wasm.x25519staticsecret_to_bytes(retptr, this.ptr);
+            wasm.x25519publickey_to_bytes(retptr, this.__wbg_ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
-            var v0 = getArrayU8FromWasm0(r0, r1).slice();
-            wasm.__wbindgen_free(r0, r1 * 1);
-            return v0;
+            var v1 = new Slice(r0, r1);
+            ;
+            return v1;
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
@@ -535,19 +542,19 @@ export class X25519StaticSecret {
     */
     diffie_hellman(other) {
         _assertClass(other, X25519PublicKey);
-        const ret = wasm.x25519staticsecret_diffie_hellman(this.ptr, other.ptr);
+        const ret = wasm.x25519staticsecret_diffie_hellman(this.__wbg_ptr, other.__wbg_ptr);
         return X25519SharedSecret.__wrap(ret);
     }
     /**
     * @returns {X25519PublicKey}
     */
     to_public() {
-        const ret = wasm.x25519staticsecret_to_public(this.ptr);
+        const ret = wasm.x25519staticsecret_to_public(this.__wbg_ptr);
         return X25519PublicKey.__wrap(ret);
     }
 }
 
-async function load(module, imports) {
+async function __wbg_load(module, imports) {
     if (typeof Response === 'function' && module instanceof Response) {
         if (typeof WebAssembly.instantiateStreaming === 'function') {
             try {
@@ -578,22 +585,11 @@ async function load(module, imports) {
     }
 }
 
-function getImports() {
+function __wbg_get_imports() {
     const imports = {};
     imports.wbg = {};
     imports.wbg.__wbindgen_error_new = function(arg0, arg1) {
         const ret = new Error(getStringFromWasm0(arg0, arg1));
-        return addHeapObject(ret);
-    };
-    imports.wbg.__wbindgen_is_undefined = function(arg0) {
-        const ret = getObject(arg0) === undefined;
-        return ret;
-    };
-    imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
-        takeObject(arg0);
-    };
-    imports.wbg.__wbg_static_accessor_MODULE_ef3aa2eb251158a5 = function() {
-        const ret = module;
         return addHeapObject(ret);
     };
     imports.wbg.__wbg_self_7eede1f4488bf346 = function() { return handleError(function () {
@@ -606,6 +602,17 @@ function getImports() {
     };
     imports.wbg.__wbg_msCrypto_511eefefbfc70ae4 = function(arg0) {
         const ret = getObject(arg0).msCrypto;
+        return addHeapObject(ret);
+    };
+    imports.wbg.__wbindgen_is_undefined = function(arg0) {
+        const ret = getObject(arg0) === undefined;
+        return ret;
+    };
+    imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
+        takeObject(arg0);
+    };
+    imports.wbg.__wbg_static_accessor_MODULE_ef3aa2eb251158a5 = function() {
+        const ret = module;
         return addHeapObject(ret);
     };
     imports.wbg.__wbg_require_900d5c3984fe7703 = function(arg0, arg1, arg2) {
@@ -656,24 +663,26 @@ function getImports() {
     return imports;
 }
 
-function initMemory(imports, maybe_memory) {
+function __wbg_init_memory(imports, maybe_memory) {
 
 }
 
-function finalizeInit(instance, module) {
+function __wbg_finalize_init(instance, module) {
     wasm = instance.exports;
-    init.__wbindgen_wasm_module = module;
-    cachedInt32Memory0 = new Int32Array();
-    cachedUint8Memory0 = new Uint8Array();
+    __wbg_init.__wbindgen_wasm_module = module;
+    cachedInt32Memory0 = null;
+    cachedUint8Memory0 = null;
 
 
     return wasm;
 }
 
 function initSync(module) {
-    const imports = getImports();
+    if (wasm !== undefined) return wasm;
 
-    initMemory(imports);
+    const imports = __wbg_get_imports();
+
+    __wbg_init_memory(imports);
 
     if (!(module instanceof WebAssembly.Module)) {
         module = new WebAssembly.Module(module);
@@ -681,25 +690,79 @@ function initSync(module) {
 
     const instance = new WebAssembly.Instance(module, imports);
 
-    return finalizeInit(instance, module);
+    return __wbg_finalize_init(instance, module);
 }
 
-async function init(input) {
+export async function __wbg_init(input) {
+    if (wasm !== undefined) return wasm;
+
     if (typeof input === 'undefined') {
         throw new Error();
     }
-    const imports = getImports();
+    const imports = __wbg_get_imports();
 
     if (typeof input === 'string' || (typeof Request === 'function' && input instanceof Request) || (typeof URL === 'function' && input instanceof URL)) {
         input = fetch(input);
     }
 
-    initMemory(imports);
+    __wbg_init_memory(imports);
 
-    const { instance, module } = await load(await input, imports);
+    const { instance, module } = await __wbg_load(await input, imports);
 
-    return finalizeInit(instance, module);
+    return __wbg_finalize_init(instance, module);
 }
 
-export { init, initSync }
-export default init;
+export { initSync }
+export default __wbg_init;
+
+export class Slice {
+
+  /**
+   * @param {number} ptr 
+   * @param {number} len 
+   **/
+  constructor(ptr, len) {
+    this.ptr = ptr
+    this.len = len
+    this.start = (ptr >>> 0) / 1
+    this.end = this.start + len
+  }
+
+  /**
+   * @returns {Uint8Array}
+   **/
+  get bytes() {
+    return getUint8Memory0().subarray(this.start, this.end)
+  }
+
+  /**
+   * @returns {void}
+   **/
+  free() {
+    wasm.__wbindgen_free(this.ptr, this.len * 1);
+  }
+
+  /**
+   * @returns {Uint8Array}
+   **/
+  copy() {
+    const bytes = this.bytes.slice()
+    this.free()
+    return bytes
+  }
+
+  /**
+   * @returns {void}
+   **/
+  [Symbol.dispose]() {
+    this.free()
+  }
+
+  /**
+   * @returns {void}
+   **/
+  dispose() {
+    this.free()
+  }
+
+}
