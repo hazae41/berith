@@ -3,7 +3,7 @@
   "collaborators": [
     "hazae41 <hazae41@proton.me>"
   ],
-  "description": "WebAssembly port of Dalek's Ed25519 and X25519, Rust implementations of Ed25519 (EdDSA over Curve25519) signatures and X25519 (ECDH over Curve25519) key exchange",
+  "description": "WebAssembly port of Ed25519 signatures and X25519 key exchange",
   "version": "1.0.0",
   "license": "Unlicense",
   "repository": {

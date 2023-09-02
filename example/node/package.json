@@ -1,6 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "@hazae41/berith": "file:../.."
-  }
-}
