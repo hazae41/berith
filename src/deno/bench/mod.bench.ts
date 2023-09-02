@@ -1,5 +1,5 @@
 import { ed25519 } from "npm:@noble/curves@0.7.0/ed25519";
-import { Berith, Ed25519Keypair } from "../../../src/deno/mod.ts";
+import { Berith, Ed25519SigningKey } from "../../../src/deno/mod.ts";
 
 await Berith.initBundledOnce()
 
@@ -11,7 +11,7 @@ crypto.getRandomValues(message)
 const group = "mod"
 
 Deno.bench("@hazae41/berith (unserialized)", { group, baseline: true }, () => {
-  const keypair = new Ed25519Keypair()
+  const keypair = new Ed25519SigningKey()
   const identity = keypair.public()
   const proof = keypair.sign(message)
   identity.verify(message, proof)
