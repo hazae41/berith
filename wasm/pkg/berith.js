@@ -103,7 +103,16 @@ export class Ed25519Keypair {
         return ptr;
     }
 
-    free() {
+  
+  [Symbol.dispose]() {
+    this.free()
+  }
+
+  dispose() {
+    this.free()
+  }
+
+  free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519keypair_free(ptr);
     }
@@ -187,7 +196,16 @@ export class Ed25519PublicKey {
         return ptr;
     }
 
-    free() {
+  
+  [Symbol.dispose]() {
+    this.free()
+  }
+
+  dispose() {
+    this.free()
+  }
+
+  free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519publickey_free(ptr);
     }
@@ -280,7 +298,16 @@ export class Ed25519Signature {
         return ptr;
     }
 
-    free() {
+  
+  [Symbol.dispose]() {
+    this.free()
+  }
+
+  dispose() {
+    this.free()
+  }
+
+  free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519signature_free(ptr);
     }
@@ -361,7 +388,16 @@ export class X25519PublicKey {
         return ptr;
     }
 
-    free() {
+  
+  [Symbol.dispose]() {
+    this.free()
+  }
+
+  dispose() {
+    this.free()
+  }
+
+  free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519publickey_free(ptr);
     }
@@ -442,7 +478,16 @@ export class X25519SharedSecret {
         return ptr;
     }
 
-    free() {
+  
+  [Symbol.dispose]() {
+    this.free()
+  }
+
+  dispose() {
+    this.free()
+  }
+
+  free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519sharedsecret_free(ptr);
     }
@@ -489,7 +534,16 @@ export class X25519StaticSecret {
         return ptr;
     }
 
-    free() {
+  
+  [Symbol.dispose]() {
+    this.free()
+  }
+
+  dispose() {
+    this.free()
+  }
+
+  free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519staticsecret_free(ptr);
     }

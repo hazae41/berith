@@ -3,6 +3,11 @@
 /**
 */
 export class Ed25519Keypair {
+
+  [Symbol.dispose](): void
+
+  dispose(): void
+
   free(): void;
 /**
 */
@@ -29,6 +34,11 @@ export class Ed25519Keypair {
 /**
 */
 export class Ed25519PublicKey {
+
+  [Symbol.dispose](): void
+
+  dispose(): void
+
   free(): void;
 /**
 * @param {Uint8Array} input
@@ -53,6 +63,11 @@ export class Ed25519PublicKey {
 /**
 */
 export class Ed25519Signature {
+
+  [Symbol.dispose](): void
+
+  dispose(): void
+
   free(): void;
 /**
 * @param {Uint8Array} input
@@ -71,6 +86,11 @@ export class Ed25519Signature {
 /**
 */
 export class X25519PublicKey {
+
+  [Symbol.dispose](): void
+
+  dispose(): void
+
   free(): void;
 /**
 * @param {Uint8Array} input
@@ -89,6 +109,11 @@ export class X25519PublicKey {
 /**
 */
 export class X25519SharedSecret {
+
+  [Symbol.dispose](): void
+
+  dispose(): void
+
   free(): void;
 /**
 * @returns {Slice}
@@ -102,6 +127,11 @@ export class X25519SharedSecret {
 /**
 */
 export class X25519StaticSecret {
+
+  [Symbol.dispose](): void
+
+  dispose(): void
+
   free(): void;
 /**
 */
