@@ -20,13 +20,13 @@
     "build:wasm": "cd wasm && rimraf pkg && wasm-pack build --target web --release && cd .. && node patch.js",
     "build:dist": "rimraf dist && rollup -c",
     "build": "npm run build:wasm && npm run build:dist",
-    "test:node": "node ./dist/test/src/node/index.test.cjs",
+    "test:node": "node ./dist/test/src/node/index.test.mjs",
     "test:deno": "deno run -A ./src/deno/mod.test.ts",
     "test": "npm run test:node && npm run test:deno",
     "example:deno": "deno run ./example/deno/mod.ts",
     "example:node": "cd ./example/node && npm ci && node ./index.js",
     "bench:deno": "cd ./src/deno/bench && deno bench mod.bench.ts",
-    "bench:node": "node ./dist/bench/src/node/index.bench.cjs",
+    "bench:node": "node ./dist/bench/src/node/index.bench.mjs",
     "prepare": "npm run build:dist"
   },
   "devDependencies": {

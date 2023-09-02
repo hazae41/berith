@@ -6,6 +6,13 @@ export const config = [
   {
     input: "./src/node/index.ts",
     output: [{
+      dir: "./dist/esm",
+      format: "esm",
+      exports: "named",
+      preserveModules: true,
+      sourcemap: true,
+      entryFileNames: "[name].mjs",
+    }, {
       dir: "./dist/cjs",
       format: "cjs",
       exports: "named",
@@ -31,11 +38,11 @@ export const config = [
     input: "./src/node/index.test.ts",
     output: [{
       dir: "./dist/test",
-      format: "cjs",
+      format: "esm",
       exports: "named",
       preserveModules: true,
       sourcemap: true,
-      entryFileNames: "[name].cjs"
+      entryFileNames: "[name].mjs"
     }],
     plugins: [externals({ devDeps: true }), ts()],
   },
@@ -43,11 +50,11 @@ export const config = [
     input: "./src/node/index.bench.ts",
     output: [{
       dir: "./dist/bench",
-      format: "cjs",
+      format: "esm",
       exports: "named",
       preserveModules: true,
       sourcemap: true,
-      entryFileNames: "[name].cjs"
+      entryFileNames: "[name].mjs"
     }],
     plugins: [externals({ devDeps: true }), ts()],
   },

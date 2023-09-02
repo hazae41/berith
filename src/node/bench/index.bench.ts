@@ -2,7 +2,7 @@ import { benchSync } from "@hazae41/deimos";
 import { ed25519 } from "@noble/curves/ed25519";
 import crypto from "crypto";
 import supercop from "supercop.wasm";
-import { Berith, Ed25519Keypair } from "../index.js";
+import { Berith, Ed25519SigningKey } from "../index.js";
 
 (async () => {
   await Berith.initBundledOnce()
@@ -16,7 +16,7 @@ import { Berith, Ed25519Keypair } from "../index.js";
   const samples = 1_000
 
   const resultBerith = benchSync("@hazae41/berith", () => {
-    const keypair = new Ed25519Keypair()
+    const keypair = new Ed25519SigningKey()
     const identity = keypair.public()
     const proof = keypair.sign(message)
     identity.verify(message, proof)

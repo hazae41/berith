@@ -15,8 +15,8 @@ pub struct X25519StaticSecret {
 #[wasm_bindgen]
 impl X25519StaticSecret {
     #[wasm_bindgen(constructor)]
-    pub fn new() -> Self {
-        let secret = x25519_dalek::StaticSecret::new(&mut rand::rngs::OsRng {});
+    pub fn random() -> Self {
+        let secret = x25519_dalek::StaticSecret::random();
         let inner = Box::new(secret);
 
         Self { inner }
@@ -24,7 +24,7 @@ impl X25519StaticSecret {
 
     #[wasm_bindgen]
     pub fn from_bytes(input: &[u8]) -> Result<X25519StaticSecret, JsError> {
-        let bytes: [u8; 32] = input.try_into().map_err(JsError::from)?;
+        let bytes: [u8; 32] = input.try_into()?;
         let secret = x25519_dalek::StaticSecret::from(bytes);
         let inner = Box::new(secret);
 

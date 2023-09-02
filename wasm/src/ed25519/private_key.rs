@@ -4,28 +4,33 @@ use alloc::{boxed::Box, vec::Vec};
 
 use wasm_bindgen::prelude::*;
 
-use crate::ed25519::public_key::Ed25519PublicKey;
+use crate::ed25519::public_key::Ed25519VerifyingKey;
 use crate::ed25519::signature::Ed25519Signature;
 
 #[wasm_bindgen]
-pub struct Ed25519Keypair {
-    pub(crate) inner: Box<ed25519_dalek::Keypair>,
+pub struct Ed25519SigningKey {
+    pub(crate) inner: Box<ed25519_dalek::SigningKey>,
 }
 
 #[wasm_bindgen]
-impl Ed25519Keypair {
+impl Ed25519SigningKey {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
-        let keypair = ed25519_dalek::Keypair::generate(&mut rand::rngs::OsRng {});
+        Self::random()
+    }
+
+    #[wasm_bindgen]
+    pub fn random() -> Self {
+        let keypair = ed25519_dalek::SigningKey::generate(&mut rand_core::OsRng {});
         let inner = Box::new(keypair);
 
         Self { inner }
     }
 
     #[wasm_bindgen]
-    pub fn from_bytes(input: &[u8]) -> Result<Ed25519Keypair, JsError> {
-        let rkeypair = ed25519_dalek::Keypair::from_bytes(input);
-        let keypair = rkeypair.map_err(|_| JsError::new("Ed25519Keypair::from_bytes"))?;
+    pub fn from_bytes(input: &[u8]) -> Result<Ed25519SigningKey, JsError> {
+        let bytes: &[u8; 32] = input.try_into()?;
+        let keypair = ed25519_dalek::SigningKey::from_bytes(bytes);
         let inner = Box::new(keypair);
 
         Ok(Self { inner })
@@ -37,11 +42,11 @@ impl Ed25519Keypair {
     }
 
     #[wasm_bindgen]
-    pub fn public(&self) -> Ed25519PublicKey {
-        let public = self.inner.public;
+    pub fn public(&self) -> Ed25519VerifyingKey {
+        let public = self.inner.verifying_key();
         let inner = Box::new(public);
 
-        Ed25519PublicKey { inner }
+        Ed25519VerifyingKey { inner }
     }
 
     #[wasm_bindgen]

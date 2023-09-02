@@ -1,20 +1,20 @@
 import { assert, test } from "@hazae41/phobos";
-import { Ed25519Keypair, Ed25519PublicKey, Ed25519Signature, X25519PublicKey, X25519StaticSecret, initBundledOnce } from "./index.js";
+import { Ed25519Signature, Ed25519SigningKey, Ed25519VerifyingKey, X25519PublicKey, X25519StaticSecret, initBundledOnce } from "./index.js";
 
 function equals(a: Uint8Array, b: Uint8Array) {
   return Buffer.from(a).equals(Buffer.from(b))
 }
 
-function assertEd25519Keypair(keypair: Ed25519Keypair) {
+function assertEd25519Keypair(keypair: Ed25519SigningKey) {
   const bytes = keypair.to_bytes().copy()
-  const bytes2 = Ed25519Keypair.from_bytes(bytes).to_bytes().copy()
+  const bytes2 = Ed25519SigningKey.from_bytes(bytes).to_bytes().copy()
 
   assert(equals(bytes, bytes2), `keypair.to_bytes serialization`)
 }
 
-function assertEd25519PublicKey(identity: Ed25519PublicKey) {
+function assertEd25519PublicKey(identity: Ed25519VerifyingKey) {
   const bytes = identity.to_bytes().copy()
-  const bytes2 = Ed25519PublicKey.from_bytes(bytes).to_bytes().copy()
+  const bytes2 = Ed25519VerifyingKey.from_bytes(bytes).to_bytes().copy()
 
   assert(equals(bytes, bytes2), `identity.to_bytes serialization`)
 }
@@ -31,7 +31,7 @@ test("Ed25519", async () => {
 
   const hello = new TextEncoder().encode("hello world")
 
-  const keypair = new Ed25519Keypair()
+  const keypair = new Ed25519SigningKey()
   const identity = keypair.public()
 
   assertEd25519Keypair(keypair)
