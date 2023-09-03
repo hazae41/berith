@@ -6,8 +6,6 @@ export class Ed25519Signature {
 
   [Symbol.dispose](): void
 
-  dispose(): void
-
   free(): void;
 /**
 * @param {Uint8Array} input
@@ -28,8 +26,6 @@ export class Ed25519Signature {
 export class Ed25519SigningKey {
 
   [Symbol.dispose](): void
-
-  dispose(): void
 
   free(): void;
 /**
@@ -64,8 +60,6 @@ export class Ed25519VerifyingKey {
 
   [Symbol.dispose](): void
 
-  dispose(): void
-
   free(): void;
 /**
 * @param {Uint8Array} input
@@ -93,8 +87,6 @@ export class X25519PublicKey {
 
   [Symbol.dispose](): void
 
-  dispose(): void
-
   free(): void;
 /**
 * @param {Uint8Array} input
@@ -116,8 +108,6 @@ export class X25519SharedSecret {
 
   [Symbol.dispose](): void
 
-  dispose(): void
-
   free(): void;
 /**
 * @returns {Slice}
@@ -133,8 +123,6 @@ export class X25519SharedSecret {
 export class X25519StaticSecret {
 
   [Symbol.dispose](): void
-
-  dispose(): void
 
   free(): void;
 /**
@@ -168,30 +156,30 @@ export interface InitOutput {
   readonly x25519staticsecret_from_bytes: (a: number, b: number, c: number) => void;
   readonly x25519staticsecret_diffie_hellman: (a: number, b: number) => number;
   readonly x25519staticsecret_to_public: (a: number) => number;
-  readonly ed25519verifyingkey_from_bytes: (a: number, b: number, c: number) => void;
-  readonly ed25519verifyingkey_to_bytes: (a: number, b: number) => void;
-  readonly ed25519verifyingkey_verify: (a: number, b: number, c: number, d: number) => number;
-  readonly x25519publickey_from_bytes: (a: number, b: number, c: number) => void;
-  readonly x25519publickey_to_bytes: (a: number, b: number) => void;
-  readonly x25519sharedsecret_was_contributory: (a: number) => number;
-  readonly __wbg_ed25519signature_free: (a: number) => void;
-  readonly ed25519signature_from_bytes: (a: number, b: number, c: number) => void;
-  readonly ed25519signature_to_bytes: (a: number, b: number) => void;
   readonly ed25519signingkey_new: () => number;
   readonly ed25519signingkey_from_bytes: (a: number, b: number, c: number) => void;
   readonly ed25519signingkey_to_bytes: (a: number, b: number) => void;
   readonly ed25519signingkey_public: (a: number) => number;
   readonly ed25519signingkey_sign: (a: number, b: number, c: number) => number;
+  readonly ed25519verifyingkey_from_bytes: (a: number, b: number, c: number) => void;
+  readonly ed25519verifyingkey_to_bytes: (a: number, b: number) => void;
+  readonly ed25519verifyingkey_verify: (a: number, b: number, c: number, d: number) => number;
+  readonly x25519sharedsecret_was_contributory: (a: number) => number;
+  readonly x25519publickey_from_bytes: (a: number, b: number, c: number) => void;
+  readonly x25519publickey_to_bytes: (a: number, b: number) => void;
+  readonly __wbg_ed25519signature_free: (a: number) => void;
+  readonly ed25519signature_from_bytes: (a: number, b: number, c: number) => void;
+  readonly ed25519signature_to_bytes: (a: number, b: number) => void;
+  readonly ed25519signingkey_random: () => number;
   readonly ed25519verifyingkey_new: (a: number, b: number, c: number) => void;
   readonly x25519publickey_new: (a: number, b: number, c: number) => void;
   readonly ed25519signature_new: (a: number, b: number, c: number) => void;
-  readonly ed25519signingkey_random: () => number;
   readonly x25519staticsecret_to_bytes: (a: number, b: number) => void;
   readonly x25519sharedsecret_to_bytes: (a: number, b: number) => void;
   readonly __wbg_x25519staticsecret_free: (a: number) => void;
-  readonly __wbg_x25519publickey_free: (a: number) => void;
-  readonly __wbg_x25519sharedsecret_free: (a: number) => void;
   readonly __wbg_ed25519verifyingkey_free: (a: number) => void;
+  readonly __wbg_x25519sharedsecret_free: (a: number) => void;
+  readonly __wbg_x25519publickey_free: (a: number) => void;
   readonly __wbg_ed25519signingkey_free: (a: number) => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
@@ -247,10 +235,5 @@ export class Slice {
    * Free the bytes
    **/
   [Symbol.dispose](): void
-
-  /**
-   * Free the bytes
-   **/
-  dispose(): void
 
 }

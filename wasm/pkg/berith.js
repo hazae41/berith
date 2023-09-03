@@ -108,10 +108,6 @@ export class Ed25519Signature {
     this.free()
   }
 
-  dispose() {
-    this.free()
-  }
-
   free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519signature_free(ptr);
@@ -195,10 +191,6 @@ export class Ed25519SigningKey {
 
   
   [Symbol.dispose]() {
-    this.free()
-  }
-
-  dispose() {
     this.free()
   }
 
@@ -295,10 +287,6 @@ export class Ed25519VerifyingKey {
 
   
   [Symbol.dispose]() {
-    this.free()
-  }
-
-  dispose() {
     this.free()
   }
 
@@ -400,10 +388,6 @@ export class X25519PublicKey {
     this.free()
   }
 
-  dispose() {
-    this.free()
-  }
-
   free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519publickey_free(ptr);
@@ -490,10 +474,6 @@ export class X25519SharedSecret {
     this.free()
   }
 
-  dispose() {
-    this.free()
-  }
-
   free() {
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519sharedsecret_free(ptr);
@@ -543,10 +523,6 @@ export class X25519StaticSecret {
 
   
   [Symbol.dispose]() {
-    this.free()
-  }
-
-  dispose() {
     this.free()
   }
 
@@ -865,13 +841,6 @@ export class Slice {
    * @returns {void}
    **/
   [Symbol.dispose]() {
-    this.free()
-  }
-
-  /**
-   * @returns {void}
-   **/
-  dispose() {
     this.free()
   }
 
