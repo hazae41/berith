@@ -8,7 +8,7 @@
   "author": "hazae41",
   "license": "Unlicense",
   "main": "./dist/cjs/src/node/index.cjs",
-  "module": "./dist/cjs/src/node/index.cjs",
+  "module": "./dist/cjs/src/node/index.mjs",
   "types": "./dist/types/src/node/index.d.ts",
   "sideEffects": false,
   "files": [
@@ -45,7 +45,7 @@
   "exports": {
     ".": {
       "types": "./dist/types/src/node/index.d.ts",
-      "import": "./dist/cjs/src/node/index.cjs",
+      "import": "./dist/cjs/src/node/index.mjs",
       "require": "./dist/cjs/src/node/index.cjs"
     }
   },
