@@ -30,6 +30,7 @@
     "prepare": "npm run build:dist"
   },
   "devDependencies": {
+    "@hazae41/cursor": "^1.1.25",
     "@hazae41/deimos": "^1.0.6",
     "@hazae41/phobos": "^1.0.10",
     "@noble/curves": "^1.2.0",
@@ -70,7 +71,6 @@
     "deno"
   ],
   "dependencies": {
-    "@hazae41/cursor": "^1.1.25",
     "@hazae41/result": "^1.1.2"
   }
 }
