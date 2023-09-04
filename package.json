@@ -68,5 +68,9 @@
     "rust",
     "unit-tested",
     "deno"
-  ]
+  ],
+  "dependencies": {
+    "@hazae41/cursor": "^1.1.25",
+    "@hazae41/result": "^1.1.2"
+  }
 }
