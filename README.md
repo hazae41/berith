@@ -101,17 +101,17 @@ const verified = identity.verify(bytes, proof); // boolean
 You can serialize and deserialize to Uint8Array
 
 ```typescript
-const bytes = new Ed25519Keypair().to_bytes().copy();
+const bytes = new Ed25519Keypair().to_bytes().copyAndDispose();
 const keypair = Ed25519Keypair.from_bytes(bytes);
 ```
 
 ```typescript
-const bytes = keypair.public().to_bytes().copy();
+const bytes = keypair.public().to_bytes().copyAndDispose();
 const identity = Ed25519PublicKey.from_bytes(bytes);
 ```
 
 ```typescript
-const bytes = keypair.sign(input).to_bytes().copy();
+const bytes = keypair.sign(input).to_bytes().copyAndDispose();
 const proof = Ed25519Signature.from_bytes(bytes);
 ```
 
@@ -142,8 +142,8 @@ const sharedx = secretx.diffie_hellman(publicy)
 const sharedy = secrety.diffie_hellman(publicx)
 
 // S is the same for Alice and Bob
-console.log("S (Alice)", sharedx.to_bytes().copy())
-console.log("S (Bob", sharedy.to_bytes().copy())
+console.log("S (Alice)", sharedx.to_bytes().copyAndDispose())
+console.log("S (Bob", sharedy.to_bytes().copyAndDispose())
 ```
 
 ## Building

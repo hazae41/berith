@@ -6,22 +6,22 @@ function equals(a: Uint8Array, b: Uint8Array) {
 }
 
 function assertEd25519Keypair(keypair: Ed25519SigningKey) {
-  const bytes = keypair.to_bytes().copy()
-  const bytes2 = Ed25519SigningKey.from_bytes(bytes).to_bytes().copy()
+  const bytes = keypair.to_bytes().copyAndDispose()
+  const bytes2 = Ed25519SigningKey.from_bytes(bytes).to_bytes().copyAndDispose()
 
   assert(equals(bytes, bytes2), `keypair.to_bytes serialization`)
 }
 
 function assertEd25519PublicKey(identity: Ed25519VerifyingKey) {
-  const bytes = identity.to_bytes().copy()
-  const bytes2 = Ed25519VerifyingKey.from_bytes(bytes).to_bytes().copy()
+  const bytes = identity.to_bytes().copyAndDispose()
+  const bytes2 = Ed25519VerifyingKey.from_bytes(bytes).to_bytes().copyAndDispose()
 
   assert(equals(bytes, bytes2), `identity.to_bytes serialization`)
 }
 
 function assertEd25519Signature(signature: Ed25519Signature) {
-  const bytes = signature.to_bytes().copy()
-  const bytes2 = Ed25519Signature.from_bytes(bytes).to_bytes().copy()
+  const bytes = signature.to_bytes().copyAndDispose()
+  const bytes2 = Ed25519Signature.from_bytes(bytes).to_bytes().copyAndDispose()
 
   assert(equals(bytes, bytes2), `signature.to_bytes serialization`)
 }
@@ -45,15 +45,15 @@ test("Ed25519", async () => {
 })
 
 function assertX25519StaticSecret(secret: X25519StaticSecret) {
-  const bytes = secret.to_bytes().copy()
-  const bytes2 = X25519StaticSecret.from_bytes(bytes).to_bytes().copy()
+  const bytes = secret.to_bytes().copyAndDispose()
+  const bytes2 = X25519StaticSecret.from_bytes(bytes).to_bytes().copyAndDispose()
 
   assert(equals(bytes, bytes2), `secret.to_bytes serialization`)
 }
 
 function assertX25519PublicKey(publick: X25519PublicKey) {
-  const bytes = publick.to_bytes().copy()
-  const bytes2 = X25519PublicKey.from_bytes(bytes).to_bytes().copy()
+  const bytes = publick.to_bytes().copyAndDispose()
+  const bytes2 = X25519PublicKey.from_bytes(bytes).to_bytes().copyAndDispose()
 
   assert(equals(bytes, bytes2), `publick.to_bytes serialization`)
 }
@@ -76,5 +76,5 @@ test("X25519", async () => {
   const sharedx = secretx.diffie_hellman(publicy)
   const sharedy = secrety.diffie_hellman(publicx)
 
-  assert(equals(sharedx.to_bytes().copy(), sharedy.to_bytes().copy()), `secrets should be equal`)
+  assert(equals(sharedx.to_bytes().copyAndDispose(), sharedy.to_bytes().copyAndDispose()), `secrets should be equal`)
 })

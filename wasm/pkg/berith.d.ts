@@ -239,7 +239,7 @@ export class Slice {
   /**
    * Copy the bytes and free them
    **/
-  copy(): Uint8Array
+  copyAndDispose(): Uint8Array
 
   trySize(): Result<number, never>
 
