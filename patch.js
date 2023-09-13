@@ -15,6 +15,14 @@ const disposableTs = `
   [Symbol.dispose](): void
 `
 
+const zeroCopyPassJs = `
+function passArray8ToWasm0(arg, malloc) {
+    if (getUint8Memory0().buffer === arg.buffer) {
+      WASM_VECTOR_LEN = arg.byteLength;
+      return arg.byteOffset
+    }
+`
+
 const glueJs = readFileSync(`./wasm/pkg/berith.js`, "utf8")
   .replace("async function __wbg_init", "export async function __wbg_init")
   .replace("input = new URL('berith_bg.wasm', import.meta.url);", "throw new Error();")
@@ -22,6 +30,7 @@ const glueJs = readFileSync(`./wasm/pkg/berith.js`, "utf8")
   .replaceAll("wasm.__wbindgen_free(r0, r1 * 1)", "")
   .replaceAll("@returns {Uint8Array}", "@returns {Slice}")
   .replaceAll("  free() {", disposableJs + "\n" + "  free() {")
+  .replaceAll("function passArray8ToWasm0(arg, malloc) {", zeroCopyPassJs)
 
 const glueTs = readFileSync(`./wasm/pkg/berith.d.ts`, "utf8")
   .replace("export default function __wbg_init", "export function __wbg_init")
