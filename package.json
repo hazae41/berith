@@ -35,7 +35,7 @@
     "@hazae41/rimraf": "^1.0.1",
     "@noble/curves": "^1.2.0",
     "@rollup/plugin-typescript": "^11.1.5",
-    "@types/node": "^20.8.3",
+    "@types/node": "^20.8.4",
     "rollup": "^4.0.2",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-node-externals": "^6.1.2",

@@ -6,10 +6,8 @@ writeFileSync(`./wasm/pkg/berith.wasm.js`, `export const data = "data:applicatio
 writeFileSync(`./wasm/pkg/berith.wasm.d.ts`, `export const data: string;`);
 
 const disposableJs = `
-    #freed = false
-
     get freed() {
-        return this.#freed
+        return this.__wbg_freed
     }
 
     [Symbol.dispose]() {
@@ -17,9 +15,9 @@ const disposableJs = `
     }
 
     free() {
-        if (this.#freed)
+        if (this.__wbg_freed)
             return
-        this.#freed = true
+        this.__wbg_freed = true
 `
 
 const disposableTs = `
@@ -56,6 +54,7 @@ const glueJs = readFileSync(`./wasm/pkg/berith.js`, "utf8")
   .replaceAll("wasm.__wbindgen_free(r0, r1 * 1)", "")
   .replaceAll("@param {Uint8Array}", "@param {Box<Copiable>}")
   .replaceAll("@returns {Uint8Array}", "@returns {Slice}")
+  .replaceAll("obj.__wbg_ptr = ptr;", "obj.__wbg_ptr = ptr;" + "\n" + "        obj.__wbg_freed = false;")
   .replaceAll("  free() {", disposableJs)
   .replaceAll(originalPassJs, zeroCopyPassJs)
 

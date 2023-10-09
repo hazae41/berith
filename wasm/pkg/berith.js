@@ -102,6 +102,7 @@ export class Ed25519Signature {
         ptr = ptr >>> 0;
         const obj = Object.create(Ed25519Signature.prototype);
         obj.__wbg_ptr = ptr;
+        obj.__wbg_freed = false;
 
         return obj;
     }
@@ -114,10 +115,8 @@ export class Ed25519Signature {
     }
 
   
-    #freed = false
-
     get freed() {
-        return this.#freed
+        return this.__wbg_freed
     }
 
     [Symbol.dispose]() {
@@ -125,9 +124,9 @@ export class Ed25519Signature {
     }
 
     free() {
-        if (this.#freed)
+        if (this.__wbg_freed)
             return
-        this.#freed = true
+        this.__wbg_freed = true
 
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519signature_free(ptr);
@@ -198,6 +197,7 @@ export class Ed25519SigningKey {
         ptr = ptr >>> 0;
         const obj = Object.create(Ed25519SigningKey.prototype);
         obj.__wbg_ptr = ptr;
+        obj.__wbg_freed = false;
 
         return obj;
     }
@@ -210,10 +210,8 @@ export class Ed25519SigningKey {
     }
 
   
-    #freed = false
-
     get freed() {
-        return this.#freed
+        return this.__wbg_freed
     }
 
     [Symbol.dispose]() {
@@ -221,9 +219,9 @@ export class Ed25519SigningKey {
     }
 
     free() {
-        if (this.#freed)
+        if (this.__wbg_freed)
             return
-        this.#freed = true
+        this.__wbg_freed = true
 
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519signingkey_free(ptr);
@@ -304,6 +302,7 @@ export class Ed25519VerifyingKey {
         ptr = ptr >>> 0;
         const obj = Object.create(Ed25519VerifyingKey.prototype);
         obj.__wbg_ptr = ptr;
+        obj.__wbg_freed = false;
 
         return obj;
     }
@@ -316,10 +315,8 @@ export class Ed25519VerifyingKey {
     }
 
   
-    #freed = false
-
     get freed() {
-        return this.#freed
+        return this.__wbg_freed
     }
 
     [Symbol.dispose]() {
@@ -327,9 +324,9 @@ export class Ed25519VerifyingKey {
     }
 
     free() {
-        if (this.#freed)
+        if (this.__wbg_freed)
             return
-        this.#freed = true
+        this.__wbg_freed = true
 
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519verifyingkey_free(ptr);
@@ -412,6 +409,7 @@ export class X25519PublicKey {
         ptr = ptr >>> 0;
         const obj = Object.create(X25519PublicKey.prototype);
         obj.__wbg_ptr = ptr;
+        obj.__wbg_freed = false;
 
         return obj;
     }
@@ -424,10 +422,8 @@ export class X25519PublicKey {
     }
 
   
-    #freed = false
-
     get freed() {
-        return this.#freed
+        return this.__wbg_freed
     }
 
     [Symbol.dispose]() {
@@ -435,9 +431,9 @@ export class X25519PublicKey {
     }
 
     free() {
-        if (this.#freed)
+        if (this.__wbg_freed)
             return
-        this.#freed = true
+        this.__wbg_freed = true
 
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519publickey_free(ptr);
@@ -508,6 +504,7 @@ export class X25519SharedSecret {
         ptr = ptr >>> 0;
         const obj = Object.create(X25519SharedSecret.prototype);
         obj.__wbg_ptr = ptr;
+        obj.__wbg_freed = false;
 
         return obj;
     }
@@ -520,10 +517,8 @@ export class X25519SharedSecret {
     }
 
   
-    #freed = false
-
     get freed() {
-        return this.#freed
+        return this.__wbg_freed
     }
 
     [Symbol.dispose]() {
@@ -531,9 +526,9 @@ export class X25519SharedSecret {
     }
 
     free() {
-        if (this.#freed)
+        if (this.__wbg_freed)
             return
-        this.#freed = true
+        this.__wbg_freed = true
 
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519sharedsecret_free(ptr);
@@ -570,6 +565,7 @@ export class X25519StaticSecret {
         ptr = ptr >>> 0;
         const obj = Object.create(X25519StaticSecret.prototype);
         obj.__wbg_ptr = ptr;
+        obj.__wbg_freed = false;
 
         return obj;
     }
@@ -582,10 +578,8 @@ export class X25519StaticSecret {
     }
 
   
-    #freed = false
-
     get freed() {
-        return this.#freed
+        return this.__wbg_freed
     }
 
     [Symbol.dispose]() {
@@ -593,9 +587,9 @@ export class X25519StaticSecret {
     }
 
     free() {
-        if (this.#freed)
+        if (this.__wbg_freed)
             return
-        this.#freed = true
+        this.__wbg_freed = true
 
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519staticsecret_free(ptr);
