@@ -12,13 +12,13 @@ pub struct Ed25519Signature {
 #[wasm_bindgen]
 impl Ed25519Signature {
     #[wasm_bindgen(constructor)]
-    pub fn new(input: &[u8]) -> Result<Ed25519Signature, JsError> {
-        Self::from_bytes(input)
+    pub fn new(bytes: &[u8]) -> Result<Ed25519Signature, JsError> {
+        Self::from_bytes(bytes)
     }
 
     #[wasm_bindgen]
-    pub fn from_bytes(input: &[u8]) -> Result<Ed25519Signature, JsError> {
-        let rsigned = ed25519_dalek::Signature::try_from(input);
+    pub fn from_bytes(bytes: &[u8]) -> Result<Ed25519Signature, JsError> {
+        let rsigned = ed25519_dalek::Signature::try_from(bytes);
         let signed = rsigned.map_err(|_| JsError::new("Ed25519Signature::from_bytes"))?;
         let inner = Box::from(signed);
 

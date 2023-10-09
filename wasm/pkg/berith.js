@@ -1,5 +1,5 @@
 
-import { Ok } from "@hazae41/result"
+import { Copied } from "@hazae41/box"
 
 let wasm;
 
@@ -52,16 +52,17 @@ function takeObject(idx) {
 
 let WASM_VECTOR_LEN = 0;
 
-
 function passArray8ToWasm0(arg, malloc) {
-    if (getUint8Memory0().buffer === arg.buffer) {
-      WASM_VECTOR_LEN = arg.byteLength;
-      return arg.byteOffset
+    if (getUint8Memory0().buffer === arg.inner.bytes.buffer) {
+      const bytes = arg.unwrap().bytes
+      WASM_VECTOR_LEN = bytes.byteLength;
+      return bytes.byteOffset
     }
 
-    const ptr = malloc(arg.length * 1, 1) >>> 0;
-    getUint8Memory0().set(arg, ptr / 1);
-    WASM_VECTOR_LEN = arg.length;
+    const bytes = arg.get().bytes
+    const ptr = malloc(bytes.length * 1, 1) >>> 0;
+    getUint8Memory0().set(bytes, ptr / 1);
+    WASM_VECTOR_LEN = bytes.length;
     return ptr;
 }
 
@@ -113,21 +114,31 @@ export class Ed25519Signature {
     }
 
   
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
 
-  free() {
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
+
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519signature_free(ptr);
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     */
-    constructor(input) {
+    constructor(bytes) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+            const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
             wasm.ed25519signature_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
@@ -142,13 +153,13 @@ export class Ed25519Signature {
         }
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     * @returns {Ed25519Signature}
     */
-    static from_bytes(input) {
+    static from_bytes(bytes) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+            const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
             wasm.ed25519signature_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
@@ -199,11 +210,21 @@ export class Ed25519SigningKey {
     }
 
   
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
 
-  free() {
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
+
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519signingkey_free(ptr);
     }
@@ -221,13 +242,13 @@ export class Ed25519SigningKey {
         return Ed25519SigningKey.__wrap(ret);
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     * @returns {Ed25519SigningKey}
     */
-    static from_bytes(input) {
+    static from_bytes(bytes) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+            const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
             wasm.ed25519signingkey_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
@@ -265,11 +286,11 @@ export class Ed25519SigningKey {
         return Ed25519VerifyingKey.__wrap(ret);
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     * @returns {Ed25519Signature}
     */
-    sign(input) {
-        const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+    sign(bytes) {
+        const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
         const ret = wasm.ed25519signingkey_sign(this.__wbg_ptr, ptr0, len0);
         return Ed25519Signature.__wrap(ret);
@@ -295,21 +316,31 @@ export class Ed25519VerifyingKey {
     }
 
   
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
 
-  free() {
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
+
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_ed25519verifyingkey_free(ptr);
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     */
-    constructor(input) {
+    constructor(bytes) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+            const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
             wasm.ed25519verifyingkey_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
@@ -324,13 +355,13 @@ export class Ed25519VerifyingKey {
         }
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     * @returns {Ed25519VerifyingKey}
     */
-    static from_bytes(input) {
+    static from_bytes(bytes) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+            const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
             wasm.ed25519verifyingkey_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
@@ -361,12 +392,12 @@ export class Ed25519VerifyingKey {
         }
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     * @param {Ed25519Signature} signature
     * @returns {boolean}
     */
-    verify(input, signature) {
-        const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+    verify(bytes, signature) {
+        const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
         _assertClass(signature, Ed25519Signature);
         const ret = wasm.ed25519verifyingkey_verify(this.__wbg_ptr, ptr0, len0, signature.__wbg_ptr);
@@ -393,21 +424,31 @@ export class X25519PublicKey {
     }
 
   
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
 
-  free() {
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
+
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519publickey_free(ptr);
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     */
-    constructor(input) {
+    constructor(bytes) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+            const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
             wasm.x25519publickey_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
@@ -422,13 +463,13 @@ export class X25519PublicKey {
         }
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     * @returns {X25519PublicKey}
     */
-    static from_bytes(input) {
+    static from_bytes(bytes) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+            const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
             wasm.x25519publickey_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
@@ -479,11 +520,21 @@ export class X25519SharedSecret {
     }
 
   
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
 
-  free() {
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
+
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519sharedsecret_free(ptr);
     }
@@ -531,11 +582,21 @@ export class X25519StaticSecret {
     }
 
   
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
 
-  free() {
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
+
         const ptr = this.__destroy_into_raw();
         wasm.__wbg_x25519staticsecret_free(ptr);
     }
@@ -546,13 +607,13 @@ export class X25519StaticSecret {
         return X25519StaticSecret.__wrap(ret);
     }
     /**
-    * @param {Uint8Array} input
+    * @param {Box<Copiable>} bytes
     * @returns {X25519StaticSecret}
     */
-    static from_bytes(input) {
+    static from_bytes(bytes) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passArray8ToWasm0(input, wasm.__wbindgen_malloc);
+            const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
             const len0 = WASM_VECTOR_LEN;
             wasm.x25519staticsecret_from_bytes(retptr, ptr0, len0);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
@@ -813,6 +874,8 @@ export default __wbg_init;
 
 export class Slice {
 
+  #freed = false
+
   /**
    * @param {number} ptr 
    * @param {number} len 
@@ -838,35 +901,27 @@ export class Slice {
     return getUint8Memory0().subarray(this.start, this.end)
   }
 
+  get freed() {
+    return this.#freed
+  }
+
   /**
    * @returns {void}
    **/
   free() {
+    if (this.#freed)
+      return
+    this.#freed = true
     wasm.__wbindgen_free(this.ptr, this.len * 1);
   }
 
   /**
-   * @returns {Uint8Array}
+   * @returns {Copied}
    **/
   copyAndDispose() {
     const bytes = this.bytes.slice()
     this.free()
-    return bytes
-  }
-
-  /**
-   * @returns {Result<number,never>}
-   */
-  trySize() {
-    return new Ok(this.len)
-  }
-
-  /**
-   * @param {Cursor} cursor 
-   * @returns {Result<void, CursorWriteError>}
-   */
-  tryWrite(cursor) {
-    return cursor.tryWrite(this.bytes)
+    return new Copied(bytes)
   }
 
 }

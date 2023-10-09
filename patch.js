@@ -6,44 +6,74 @@ writeFileSync(`./wasm/pkg/berith.wasm.js`, `export const data = "data:applicatio
 writeFileSync(`./wasm/pkg/berith.wasm.d.ts`, `export const data: string;`);
 
 const disposableJs = `
-  [Symbol.dispose]() {
-    this.free()
-  }
+    #freed = false
+
+    get freed() {
+        return this.#freed
+    }
+
+    [Symbol.dispose]() {
+        this.free()
+    }
+
+    free() {
+        if (this.#freed)
+            return
+        this.#freed = true
 `
 
 const disposableTs = `
+  get freed(): boolean
+
   [Symbol.dispose](): void
 `
 
-const zeroCopyPassJs = `
-function passArray8ToWasm0(arg, malloc) {
-    if (getUint8Memory0().buffer === arg.buffer) {
-      WASM_VECTOR_LEN = arg.byteLength;
-      return arg.byteOffset
+const originalPassJs = `function passArray8ToWasm0(arg, malloc) {
+    const ptr = malloc(arg.length * 1, 1) >>> 0;
+    getUint8Memory0().set(arg, ptr / 1);
+    WASM_VECTOR_LEN = arg.length;
+    return ptr;
+}`
+
+const zeroCopyPassJs = `function passArray8ToWasm0(arg, malloc) {
+    if (getUint8Memory0().buffer === arg.inner.bytes.buffer) {
+      const bytes = arg.unwrap().bytes
+      WASM_VECTOR_LEN = bytes.byteLength;
+      return bytes.byteOffset
     }
-`
+
+    const bytes = arg.get().bytes
+    const ptr = malloc(bytes.length * 1, 1) >>> 0;
+    getUint8Memory0().set(bytes, ptr / 1);
+    WASM_VECTOR_LEN = bytes.length;
+    return ptr;
+}`
 
 const glueJs = readFileSync(`./wasm/pkg/berith.js`, "utf8")
   .replace("async function __wbg_init", "export async function __wbg_init")
   .replace("input = new URL('berith_bg.wasm', import.meta.url);", "throw new Error();")
   .replaceAll("getArrayU8FromWasm0(r0, r1).slice()", "new Slice(r0, r1)")
   .replaceAll("wasm.__wbindgen_free(r0, r1 * 1)", "")
+  .replaceAll("@param {Uint8Array}", "@param {Box<Copiable>}")
   .replaceAll("@returns {Uint8Array}", "@returns {Slice}")
-  .replaceAll("  free() {", disposableJs + "\n" + "  free() {")
-  .replaceAll("function passArray8ToWasm0(arg, malloc) {", zeroCopyPassJs)
+  .replaceAll("  free() {", disposableJs)
+  .replaceAll(originalPassJs, zeroCopyPassJs)
 
 const glueTs = readFileSync(`./wasm/pkg/berith.d.ts`, "utf8")
   .replace("export default function __wbg_init", "export function __wbg_init")
   .replaceAll("@returns {Uint8Array}", "@returns {Slice}")
+  .replaceAll("bytes: Uint8Array", "bytes: Box<Copiable>")
   .replaceAll(": Uint8Array;", ": Slice;")
   .replaceAll("  free(): void;", disposableTs + "\n" + "  free(): void;")
 
 const preJs = `
-import { Ok } from "@hazae41/result"
+import { Copied } from "@hazae41/box"
 `
 
 const postJs = `
 export class Slice {
+
+  #freed = false
 
   /**
    * @param {number} ptr 
@@ -70,42 +100,33 @@ export class Slice {
     return getUint8Memory0().subarray(this.start, this.end)
   }
 
+  get freed() {
+    return this.#freed
+  }
+
   /**
    * @returns {void}
    **/
   free() {
+    if (this.#freed)
+      return
+    this.#freed = true
     wasm.__wbindgen_free(this.ptr, this.len * 1);
   }
 
   /**
-   * @returns {Uint8Array}
+   * @returns {Copied}
    **/
   copyAndDispose() {
     const bytes = this.bytes.slice()
     this.free()
-    return bytes
-  }
-
-  /**
-   * @returns {Result<number,never>}
-   */
-  trySize() {
-    return new Ok(this.len)
-  }
-
-  /**
-   * @param {Cursor} cursor 
-   * @returns {Result<void, CursorWriteError>}
-   */
-  tryWrite(cursor) {
-    return cursor.tryWrite(this.bytes)
+    return new Copied(bytes)
   }
 
 }`
 
 const preTs = `
-import type { Result } from "@hazae41/result"
-import type { Cursor, CursorWriteError } from "@hazae41/cursor"
+import type { Box, Copiable, Copied } from "@hazae41/box"
 `
 
 const postTs = `
@@ -128,18 +149,19 @@ export class Slice {
   get bytes(): Uint8Array
 
   /**
-   * Free the bytes
+   * Is the memory freed?
+   **/
+  get freed(): boolean
+
+  /**
+   * Free the bytes (do nothing if already freed)
    **/
   free(): void
 
   /**
    * Copy the bytes and free them
    **/
-  copyAndDispose(): Uint8Array
-
-  trySize(): Result<number, never>
-
-  tryWrite(cursor: Cursor): Result<void, CursorWriteError>
+  copyAndDispose(): Copied
 
 }`
 

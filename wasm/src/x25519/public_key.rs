@@ -12,13 +12,13 @@ pub struct X25519PublicKey {
 #[wasm_bindgen]
 impl X25519PublicKey {
     #[wasm_bindgen(constructor)]
-    pub fn new(input: &[u8]) -> Result<X25519PublicKey, JsError> {
-        Self::from_bytes(input)
+    pub fn new(bytes: &[u8]) -> Result<X25519PublicKey, JsError> {
+        Self::from_bytes(bytes)
     }
 
     #[wasm_bindgen]
-    pub fn from_bytes(input: &[u8]) -> Result<X25519PublicKey, JsError> {
-        let bytes: [u8; 32] = input.try_into()?;
+    pub fn from_bytes(bytes: &[u8]) -> Result<X25519PublicKey, JsError> {
+        let bytes: [u8; 32] = bytes.try_into()?;
         let public = x25519_dalek::PublicKey::from(bytes);
         let inner = Box::new(public);
 

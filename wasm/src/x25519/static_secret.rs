@@ -23,8 +23,8 @@ impl X25519StaticSecret {
     }
 
     #[wasm_bindgen]
-    pub fn from_bytes(input: &[u8]) -> Result<X25519StaticSecret, JsError> {
-        let bytes: [u8; 32] = input.try_into()?;
+    pub fn from_bytes(bytes: &[u8]) -> Result<X25519StaticSecret, JsError> {
+        let bytes: [u8; 32] = bytes.try_into()?;
         let secret = x25519_dalek::StaticSecret::from(bytes);
         let inner = Box::new(secret);
 

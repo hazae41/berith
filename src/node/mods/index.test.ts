@@ -1,3 +1,4 @@
+import { Box, Copied } from "@hazae41/box";
 import { assert, test } from "@hazae41/phobos";
 import { Ed25519Signature, Ed25519SigningKey, Ed25519VerifyingKey, X25519PublicKey, X25519StaticSecret, initBundledOnce } from "./index.js";
 
@@ -7,23 +8,23 @@ function equals(a: Uint8Array, b: Uint8Array) {
 
 function assertEd25519Keypair(keypair: Ed25519SigningKey) {
   const bytes = keypair.to_bytes().copyAndDispose()
-  const bytes2 = Ed25519SigningKey.from_bytes(bytes).to_bytes().copyAndDispose()
+  const bytes2 = Ed25519SigningKey.from_bytes(new Box(bytes)).to_bytes().copyAndDispose()
 
-  assert(equals(bytes, bytes2), `keypair.to_bytes serialization`)
+  assert(equals(bytes.bytes, bytes2.bytes), `keypair.to_bytes serialization`)
 }
 
 function assertEd25519PublicKey(identity: Ed25519VerifyingKey) {
   const bytes = identity.to_bytes().copyAndDispose()
-  const bytes2 = Ed25519VerifyingKey.from_bytes(bytes).to_bytes().copyAndDispose()
+  const bytes2 = Ed25519VerifyingKey.from_bytes(new Box(bytes)).to_bytes().copyAndDispose()
 
-  assert(equals(bytes, bytes2), `identity.to_bytes serialization`)
+  assert(equals(bytes.bytes, bytes2.bytes), `identity.to_bytes serialization`)
 }
 
 function assertEd25519Signature(signature: Ed25519Signature) {
   const bytes = signature.to_bytes().copyAndDispose()
-  const bytes2 = Ed25519Signature.from_bytes(bytes).to_bytes().copyAndDispose()
+  const bytes2 = Ed25519Signature.from_bytes(new Box(bytes)).to_bytes().copyAndDispose()
 
-  assert(equals(bytes, bytes2), `signature.to_bytes serialization`)
+  assert(equals(bytes.bytes, bytes2.bytes), `signature.to_bytes serialization`)
 }
 
 test("Ed25519", async () => {
@@ -37,25 +38,25 @@ test("Ed25519", async () => {
   assertEd25519Keypair(keypair)
   assertEd25519PublicKey(identity)
 
-  const signature = keypair.sign(hello)
+  const signature = keypair.sign(new Box(new Copied(hello)))
 
   assertEd25519Signature(signature)
 
-  assert(identity.verify(hello, signature), `signature should be verified`)
+  assert(identity.verify(new Box(new Copied(hello)), signature), `signature should be verified`)
 })
 
 function assertX25519StaticSecret(secret: X25519StaticSecret) {
   const bytes = secret.to_bytes().copyAndDispose()
-  const bytes2 = X25519StaticSecret.from_bytes(bytes).to_bytes().copyAndDispose()
+  const bytes2 = X25519StaticSecret.from_bytes(new Box(bytes)).to_bytes().copyAndDispose()
 
-  assert(equals(bytes, bytes2), `secret.to_bytes serialization`)
+  assert(equals(bytes.bytes, bytes2.bytes), `secret.to_bytes serialization`)
 }
 
 function assertX25519PublicKey(publick: X25519PublicKey) {
   const bytes = publick.to_bytes().copyAndDispose()
-  const bytes2 = X25519PublicKey.from_bytes(bytes).to_bytes().copyAndDispose()
+  const bytes2 = X25519PublicKey.from_bytes(new Box(bytes)).to_bytes().copyAndDispose()
 
-  assert(equals(bytes, bytes2), `publick.to_bytes serialization`)
+  assert(equals(bytes.bytes, bytes2.bytes), `publick.to_bytes serialization`)
 }
 
 test("X25519", async () => {
@@ -76,5 +77,5 @@ test("X25519", async () => {
   const sharedx = secretx.diffie_hellman(publicy)
   const sharedy = secrety.diffie_hellman(publicx)
 
-  assert(equals(sharedx.to_bytes().copyAndDispose(), sharedy.to_bytes().copyAndDispose()), `secrets should be equal`)
+  assert(equals(sharedx.to_bytes().copyAndDispose().bytes, sharedy.to_bytes().copyAndDispose().bytes), `secrets should be equal`)
 })

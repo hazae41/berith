@@ -14,13 +14,13 @@ pub struct Ed25519VerifyingKey {
 #[wasm_bindgen]
 impl Ed25519VerifyingKey {
     #[wasm_bindgen(constructor)]
-    pub fn new(input: &[u8]) -> Result<Ed25519VerifyingKey, JsError> {
-        Self::from_bytes(input)
+    pub fn new(bytes: &[u8]) -> Result<Ed25519VerifyingKey, JsError> {
+        Self::from_bytes(bytes)
     }
 
     #[wasm_bindgen]
-    pub fn from_bytes(input: &[u8]) -> Result<Ed25519VerifyingKey, JsError> {
-        let bytes: &[u8; 32] = input.try_into()?;
+    pub fn from_bytes(bytes: &[u8]) -> Result<Ed25519VerifyingKey, JsError> {
+        let bytes: &[u8; 32] = bytes.try_into()?;
         let rpublic = ed25519_dalek::VerifyingKey::from_bytes(bytes);
         let public = rpublic.map_err(|_| JsError::new("Ed25519VerifyingKey::from_bytes"))?;
         let inner = Box::from(public);
@@ -34,9 +34,9 @@ impl Ed25519VerifyingKey {
     }
 
     #[wasm_bindgen]
-    pub fn verify(&self, input: &[u8], signature: &Ed25519Signature) -> bool {
+    pub fn verify(&self, bytes: &[u8], signature: &Ed25519Signature) -> bool {
         use ed25519_dalek::Verifier;
 
-        self.inner.verify(input, &signature.inner).is_ok()
+        self.inner.verify(bytes, &signature.inner).is_ok()
     }
 }

@@ -28,9 +28,9 @@ impl Ed25519SigningKey {
     }
 
     #[wasm_bindgen]
-    pub fn from_bytes(input: &[u8]) -> Result<Ed25519SigningKey, JsError> {
-        let bytes: &[u8; 32] = input.try_into()?;
-        let keypair = ed25519_dalek::SigningKey::from_bytes(bytes);
+    pub fn from_bytes(bytes: &[u8]) -> Result<Ed25519SigningKey, JsError> {
+        let sized: &[u8; 32] = bytes.try_into()?;
+        let keypair = ed25519_dalek::SigningKey::from_bytes(sized);
         let inner = Box::new(keypair);
 
         Ok(Self { inner })
@@ -50,10 +50,10 @@ impl Ed25519SigningKey {
     }
 
     #[wasm_bindgen]
-    pub fn sign(&self, input: &[u8]) -> Ed25519Signature {
+    pub fn sign(&self, bytes: &[u8]) -> Ed25519Signature {
         use ed25519_dalek::Signer;
 
-        let signed = self.inner.sign(input);
+        let signed = self.inner.sign(bytes);
         let inner = Box::new(signed);
 
         Ed25519Signature { inner }

@@ -32,7 +32,8 @@ export const config = [
       sourcemap: false,
       entryFileNames: "[name].d.ts",
     }],
-    plugins: [externals(), ts(), dts()]
+    plugins: [externals(), ts(), dts()],
+    external: [/^lib/]
   },
   {
     input: "./src/node/index.test.ts",
