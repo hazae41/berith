@@ -61,8 +61,8 @@ const glueJs = readFileSync(`./wasm/pkg/berith.js`, "utf8")
 const glueTs = readFileSync(`./wasm/pkg/berith.d.ts`, "utf8")
   .replace("export default function __wbg_init", "export function __wbg_init")
   .replaceAll("@returns {Uint8Array}", "@returns {Slice}")
-  .replaceAll("bytes: Uint8Array", "bytes: Box<Copiable>")
   .replaceAll(": Uint8Array;", ": Slice;")
+  .replaceAll(": Uint8Array", ": Box<Copiable>")
   .replaceAll("  free(): void;", disposableTs + "\n" + "  free(): void;")
 
 const preJs = `
