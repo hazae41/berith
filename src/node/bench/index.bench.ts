@@ -1,9 +1,8 @@
-import { Box, Copied } from "@hazae41/box";
 import { benchSync } from "@hazae41/deimos";
 import { ed25519 } from "@noble/curves/ed25519";
 import crypto from "crypto";
 import supercop from "supercop.wasm";
-import { Berith, Ed25519SigningKey } from "../index.js";
+import { Berith, Ed25519SigningKey, Memory } from "../index.js";
 
 (async () => {
   await Berith.initBundledOnce()
@@ -13,15 +12,15 @@ import { Berith, Ed25519SigningKey } from "../index.js";
 
   const message = new Uint8Array(1024)
   crypto.getRandomValues(message)
-  const box = new Box(new Copied(message))
+  const mmessage = new Memory(message)
 
   const samples = 1_000
 
   const resultBerith = benchSync("@hazae41/berith", () => {
     const keypair = new Ed25519SigningKey()
     const identity = keypair.public()
-    const proof = keypair.sign(box)
-    identity.verify(box, proof)
+    const proof = keypair.sign(mmessage)
+    identity.verify(mmessage, proof)
     keypair.free()
     identity.free()
     proof.free()
