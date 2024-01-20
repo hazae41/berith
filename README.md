@@ -80,39 +80,65 @@ Summary
 
 ### Ed25519 (EdDSA over Curve25519)
 
-```typescript
-import { Berith, Ed25519Keypair } from "@hazae41/berith";
+```ts
+import { Berith } from "@hazae41/berith" // node
+// import { Berith } from "https://deno.land/x/berith/src/deno/mod.ts" // deno
 
 // Wait for WASM to load
-Berith.initSyncBundledOnce();
+await Berith.initBundledOnce();
 
-// Generate an identity
-const keypair = new Ed25519Keypair();
-const identity = keypair.public(); // Ed25519PublicKey
+// Generate random private key
+using signingKey = Berith.Ed25519SigningKey.random(); // Ed25519SigningKey
 
-// Define bytes to sign
-const bytes = new TextEncoder().encode("hello world"); // Uint8Array
+// Extract private key into Memory bytes (faster)
+using signingKeyMemory = signingKey.to_bytes(); // Berith.Memory
 
-// Sign and verify
-const proof = keypair.sign(bytes); // Ed25519Signature
-const verified = identity.verify(bytes, proof); // boolean
+// Extract private key into JavaScript byte (slower)
+const signingKeyBytes = signingKey.to_bytes().copyAndDispose(); // Uint8Array
+
+// Get public key
+using indentyKey = signingKey.public(); // Ed25519VerifyingKey
+
+// Extract public key into Memory bytes (faster)
+using indentyKeyMemory = indentyKey.to_bytes(); // Berith.Memory
+
+// Extract public key into JavaScript bytes (slower)
+const indentyKeyBytes = indentyKey.to_bytes().copyAndDispose(); // Uint8Array
+
+// Encode some message to sign as UTF-8
+const data = new TextEncoder().encode("hello world"); // Uint8Array
+
+// Put data in memory
+const mdata = new Berith.Memory(data); // Berith.Memory
+
+// Sign data with private key
+using signature = signingKey.sign(mdata); // Ed25519Signature
+
+// Extract signature to Memory bytes (faster)
+using signatureMemory = signature.to_bytes(); // Berith.Memory
+
+// Extract signature to JavaScript bytes (slower)
+const signatureBytes = signature.to_bytes().copyAndDispose(); // Uint8Array
+
+// Verify signature with public key
+const verified = indentyKey.verify(mdata, signature); // bool
 ```
 
 You can serialize and deserialize to Uint8Array
 
 ```typescript
-const bytes = new Ed25519Keypair().to_bytes().copyAndDispose();
-const keypair = Ed25519Keypair.from_bytes(bytes);
+const bytes = new Ed25519SigningKey().to_bytes().copyAndDispose();
+const keypair = Berith.Ed25519SigningKey.from_bytes(bytes);
 ```
 
 ```typescript
 const bytes = keypair.public().to_bytes().copyAndDispose();
-const identity = Ed25519PublicKey.from_bytes(bytes);
+const identity = Berith.Ed25519VerifyingKey.from_bytes(bytes);
 ```
 
 ```typescript
 const bytes = keypair.sign(input).to_bytes().copyAndDispose();
-const proof = Ed25519Signature.from_bytes(bytes);
+const proof = Berith.Ed25519Signature.from_bytes(bytes);
 ```
 
 ### X25519 (ECDH over Curve25519)
