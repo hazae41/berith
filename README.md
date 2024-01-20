@@ -81,8 +81,8 @@ Summary
 ### Ed25519 (EdDSA over Curve25519)
 
 ```ts
-import { Berith, Ed25519SigningKey } from "@hazae41/berith" // node
-// import { Berith, Ed25519SigningKey } from "https://deno.land/x/berith/src/deno/mod.ts" // deno
+import { Berith, Ed25519SigningKey } from "@hazae41/berith"
+// import { Berith, Ed25519SigningKey } from "https://deno.land/x/berith/src/deno/mod.ts"
 
 // Wait for WASM to load
 await Berith.initBundledOnce();
