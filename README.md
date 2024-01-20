@@ -127,7 +127,7 @@ const verified = indentyKey.verify(mdata, signature); // bool
 You can serialize and deserialize to Uint8Array
 
 ```typescript
-const bytes = new Ed25519SigningKey().to_bytes().copyAndDispose();
+const bytes = new Berith.Ed25519SigningKey().to_bytes().copyAndDispose();
 const keypair = Berith.Ed25519SigningKey.from_bytes(bytes);
 ```
 
