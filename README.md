@@ -121,7 +121,7 @@ using signatureMemory = signature.to_bytes(); // Berith.Memory
 const signatureBytes = signature.to_bytes().copyAndDispose(); // Uint8Array
 
 // Verify signature with public key
-const verified = indentyKey.verify(mdata, signature); // bool
+const verified = indentyKey.verify(mdata, signature); // boolean
 ```
 
 You can serialize and deserialize to Uint8Array
