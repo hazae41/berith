@@ -81,14 +81,14 @@ Summary
 ### Ed25519 (EdDSA over Curve25519)
 
 ```ts
-import { Berith } from "@hazae41/berith" // node
-// import { Berith } from "https://deno.land/x/berith/src/deno/mod.ts" // deno
+import { Berith, Ed25519SigningKey } from "@hazae41/berith" // node
+// import { Berith, Ed25519SigningKey } from "https://deno.land/x/berith/src/deno/mod.ts" // deno
 
 // Wait for WASM to load
 await Berith.initBundledOnce();
 
 // Generate random private key
-using signingKey = Berith.Ed25519SigningKey.random(); // Ed25519SigningKey
+using signingKey = Ed25519SigningKey.random(); // Ed25519SigningKey
 
 // Extract private key into Memory bytes (faster)
 using signingKeyMemory = signingKey.to_bytes(); // Berith.Memory
@@ -127,18 +127,18 @@ const verified = indentyKey.verify(mdata, signature); // boolean
 You can serialize and deserialize to Uint8Array
 
 ```typescript
-const bytes = new Berith.Ed25519SigningKey().to_bytes().copyAndDispose();
-const keypair = Berith.Ed25519SigningKey.from_bytes(bytes);
+const bytes = new Ed25519SigningKey().to_bytes().copyAndDispose();
+const keypair = Ed25519SigningKey.from_bytes(bytes);
 ```
 
 ```typescript
 const bytes = keypair.public().to_bytes().copyAndDispose();
-const identity = Berith.Ed25519VerifyingKey.from_bytes(bytes);
+const identity = Ed25519VerifyingKey.from_bytes(bytes);
 ```
 
 ```typescript
 const bytes = keypair.sign(input).to_bytes().copyAndDispose();
-const proof = Berith.Ed25519Signature.from_bytes(bytes);
+const proof = Ed25519Signature.from_bytes(bytes);
 ```
 
 ### X25519 (ECDH over Curve25519)
