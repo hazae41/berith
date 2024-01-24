@@ -88,88 +88,144 @@ import { Berith, Ed25519SigningKey } from "@hazae41/berith"
 await Berith.initBundledOnce();
 
 // Generate random private key
-using signingKey = Ed25519SigningKey.random(); // Ed25519SigningKey
-
-// Extract private key into Memory bytes (faster)
-using signingKeyMemory = signingKey.to_bytes(); // Berith.Memory
-
-// Extract private key into JavaScript byte (slower)
-const signingKeyBytes = signingKey.to_bytes().copyAndDispose(); // Uint8Array
+using privateKey = Ed25519SigningKey.random() // Ed25519SigningKey
 
 // Get public key
-using indentyKey = signingKey.public(); // Ed25519VerifyingKey
-
-// Extract public key into Memory bytes (faster)
-using indentyKeyMemory = indentyKey.to_bytes(); // Berith.Memory
-
-// Extract public key into JavaScript bytes (slower)
-const indentyKeyBytes = indentyKey.to_bytes().copyAndDispose(); // Uint8Array
+using publicKey = signingKey.public() // Ed25519VerifyingKey
 
 // Encode some message to sign as UTF-8
-const data = new TextEncoder().encode("hello world"); // Uint8Array
+const data = new TextEncoder().encode("hello world") // Uint8Array
 
 // Put data in memory
-const mdata = new Berith.Memory(data); // Berith.Memory
+using mdata = new Berith.Memory(data) // Berith.Memory
 
 // Sign data with private key
-using signature = signingKey.sign(mdata); // Ed25519Signature
-
-// Extract signature to Memory bytes (faster)
-using signatureMemory = signature.to_bytes(); // Berith.Memory
-
-// Extract signature to JavaScript bytes (slower)
-const signatureBytes = signature.to_bytes().copyAndDispose(); // Uint8Array
+using signature = signingKey.sign(mdata) // Ed25519Signature
 
 // Verify signature with public key
-const verified = indentyKey.verify(mdata, signature); // boolean
-```
-
-You can serialize and deserialize to Uint8Array
-
-```typescript
-const bytes = new Ed25519SigningKey().to_bytes().copyAndDispose();
-const keypair = Ed25519SigningKey.from_bytes(bytes);
-```
-
-```typescript
-const bytes = keypair.public().to_bytes().copyAndDispose();
-const identity = Ed25519VerifyingKey.from_bytes(bytes);
-```
-
-```typescript
-const bytes = keypair.sign(input).to_bytes().copyAndDispose();
-const proof = Ed25519Signature.from_bytes(bytes);
+const verified = indentyKey.verify(mdata, signature) // boolean
 ```
 
 ### X25519 (ECDH over Curve25519)
 
-```typescript
-import { Berith, X25519StaticSecret } from "@hazae41/berith";
+```ts
+import { Berith, X25519StaticSecret } from "@hazae41/berith"
+// import { Berith, X25519StaticSecret } from "https://deno.land/x/berith/src/deno/mod.ts"
 
 // Wait for WASM to load
-Berith.initSyncBundledOnce();
+await Berith.initBundledOnce()
 
-// Generate secret x for Alice
-const secretx = new X25519StaticSecret()
+// Generate Alice's random private key
+using alicePrivateKey = new X25519StaticSecret()
 
-// Generate secret y for Bob
-const secrety = new X25519StaticSecret()
+// Get Alice's public key
+using alicePublicKey = alicePrivateKey.to_public()
 
-// Get public X for Alice to send to Bob
-const publicx = secretx.to_public()
+// Generate Bob's random private key
+using bobPrivateKey = new X25519StaticSecret()
 
-// Get public Y for Bob to send to Alice
-const publicy = secrety.to_public()
+// Get Bob's public key
+using bobPublicKey = bobSecretKey.to_public()
 
-// Alice computes the shared key S from x and Y
-const sharedx = secretx.diffie_hellman(publicy)
+// Derive Alice's shared key from Bob's public key
+using aliceSharedKey = alicePrivateKey.diffie_hellman(bobPublicKey)
 
-// Bob computes the shared key S from y and X
-const sharedy = secrety.diffie_hellman(publicx)
+// Derive Bob's shared key from Alice's public key
+using bobSharedKey = bobPrivateKey.diffie_hellman(alicePublicKey)
+```
 
-// S is the same for Alice and Bob
-console.log("S (Alice)", sharedx.to_bytes().copyAndDispose())
-console.log("S (Bob", sharedy.to_bytes().copyAndDispose())
+### Memory
+
+You have to wrap Uint8Array into Memory in order to pass them to WebAssembly
+
+```typescript
+function exampleFromBytes(bytes: Uint8Array) {
+  using memory = new Berith.Memory(bytes)
+  Berith.example(memory)
+}
+```
+
+You have to get Uint8Array from Memory via either copy or view
+
+```typescript
+function exampleWithCopy() {
+  const bytes = Berith.example().copyAndDispose() // Uint8Array
+}
+```
+
+```typescript
+function exampleWithView() {
+  using memory = Berith.example() // X.Memory
+  const bytes = memory.bytes // Uint8Array
+}
+```
+
+Don't forget to free memory with `using` keyword, `.free()` method, or `.freeNextTick()` method
+
+```typescript
+function exampleWithUsing() {
+  using memory = Berith.example()
+
+  // Do stuff with `memory` or `memory.bytes`
+  ...
+
+  // Memory is automatically freed by `using` keyword
+}
+```
+
+```typescript
+function exampleWithFree() {
+  const memory = Berith.example()
+
+  // Do stuff with `memory` or `memory.bytes`
+  ...
+
+  memory.free()
+}
+```
+
+```typescript
+function exampleWithFreeNextTick() {
+  const memory = Berith.example().freeNextTick()
+
+  // Do synchronous stuff with `memory` or `memory.bytes`
+  ...
+
+  // Memory is automatically freed by `.freeNextTick()` method
+}
+```
+
+### Serialization
+
+You can serialize and deserialize almost any type to and from Memory (and Uint8Array)
+
+```typescript
+// Generate a private key
+using privateKey = Ed25519SigningKey.random()
+
+// Extract private key into Memory bytes
+using privateKeyMemory = privateKey.to_bytes() // Berith.Memory
+
+...
+
+// Get back private key from Memory bytes
+using privateKey2 = Ed25519SigningKey.from_bytes(privateKeyMemory)
+```
+
+```typescript
+// Generate a private key
+using privateKey = Ed25519SigningKey.random()
+
+// Extract private key into JavaScript bytes
+const privateKeyBytes = privateKey.to_bytes().copyAndDispose()
+
+...
+
+// Wrap JavaScript bytes into Memory bytes
+using privateKeyMemory = new Berith.Memory(privateKeyBytes)
+
+// Get back private key from Memory bytes
+using privateKey2 = Ed25519SigningKey.from_bytes(privateKeyMemory)
 ```
 
 ## Building
