@@ -91,7 +91,7 @@ await Berith.initBundledOnce();
 using privateKey = Ed25519SigningKey.random() // Ed25519SigningKey
 
 // Get public key
-using publicKey = signingKey.public() // Ed25519VerifyingKey
+using publicKey = privateKey.public() // Ed25519VerifyingKey
 
 // Encode some message to sign as UTF-8
 const data = new TextEncoder().encode("hello world") // Uint8Array
@@ -100,10 +100,10 @@ const data = new TextEncoder().encode("hello world") // Uint8Array
 using mdata = new Berith.Memory(data) // Berith.Memory
 
 // Sign data with private key
-using signature = signingKey.sign(mdata) // Ed25519Signature
+using signature = privateKey.sign(mdata) // Ed25519Signature
 
 // Verify signature with public key
-const verified = indentyKey.verify(mdata, signature) // boolean
+const verified = publicKey.verify(mdata, signature) // boolean
 ```
 
 ### X25519 (ECDH over Curve25519)
@@ -125,7 +125,7 @@ using alicePublicKey = alicePrivateKey.to_public()
 using bobPrivateKey = new X25519StaticSecret()
 
 // Get Bob's public key
-using bobPublicKey = bobSecretKey.to_public()
+using bobPublicKey = bobPrivateKey.to_public()
 
 // Derive Alice's shared key from Bob's public key
 using aliceSharedKey = alicePrivateKey.diffie_hellman(bobPublicKey)
