@@ -1,6 +1,8 @@
 ## DEPRECATED
 
-Please use [@hazae41/ed25519](https://github.com/hazae41/ed25519) and/or [@hazae41/x25519](https://github.com/hazae41/x25519)
+Please use
+- [@hazae41/ed25519](https://github.com/hazae41/ed25519) and [@hazae41/ed25519.wasm](https://github.com/hazae41/ed25519.wasm)
+- [@hazae41/x25519](https://github.com/hazae41/x25519) and [@hazae41/x25519.wasm](https://github.com/hazae41/x25519.wasm)
 
 <div>
   <img align="right" width="128" src="https://user-images.githubusercontent.com/4405263/216624164-ee65f3ea-0857-40ad-8423-fff8014202c1.png"/>
